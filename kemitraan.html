@@ -167,6 +167,28 @@
             }
         }
 
+
+        // Benefit Mitra Modal Functions
+        function openBenefitModal() {
+            const modal = document.getElementById('benefit-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                }, 50);
+            }
+        }
+
+        function closeBenefitModal() {
+            const modal = document.getElementById('benefit-modal');
+            if (modal) {
+                modal.classList.add('opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        }
+
     </script>
 
     <!-- Google Fonts & FontAwesome -->
@@ -196,8 +218,62 @@
                 font-family: Arial, sans-serif !important;
             }
 
-            /* Un-hide and format PKS Modal for print/PDF export */
-            #pks-modal {
+            /* Print Isolation: Show ONLY active open modal (PKS or Benefit) during print */
+            #pks-modal.hidden,
+            #benefit-modal.hidden {
+                display: none !important;
+            }
+
+            #pks-modal:not(.hidden),
+            #benefit-modal:not(.hidden) {
+                display: block !important;
+                position: static !important;
+                background: #ffffff !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                z-index: 99999 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+            }
+
+            #pks-modal:not(.hidden) > div,
+            #benefit-modal:not(.hidden) > div {
+                border: none !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                max-width: 100% !important;
+                max-height: none !important;
+                overflow: visible !important;
+                background: #ffffff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            #pks-modal-header,
+            #benefit-modal-header {
+                background: #ffffff !important;
+                border-bottom: 2px solid #000000 !important;
+                padding: 1rem 0 !important;
+            }
+
+            #pks-modal-close-btn,
+            #pks-modal-footer,
+            #benefit-modal-close-btn,
+            #benefit-modal-footer {
+                display: none !important;
+            }
+
+            #pks-modal-content,
+            #benefit-modal-content {
+                overflow: visible !important;
+                max-height: none !important;
+                padding: 1.5rem 0 !important;
+                color: #000000 !important;
+                display: block !important;
+            }
+
+            #pks-modal_legacy_hidden {
                 display: block !important;
                 position: static !important;
                 background: #ffffff !important;
@@ -991,10 +1067,10 @@
 
                 <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-white/10 no-print">
                     <h4 class="font-extrabold text-sm uppercase tracking-wider text-gray-300 font-outfit">Fasilitas yang Didapatkan (Full Support):</h4>
-                    <a href="assets/Benefit_Mitra_NDOG.pdf" download="Benefit_Mitra_NDOG.pdf" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-brand-orange text-white font-extrabold text-xs shadow-lg hover:opacity-90 transition-all group">
-                        <i class="fa-solid fa-file-pdf text-sm group-hover:scale-110 transition-transform"></i>
-                        <span>Download Benefit Mitra (PDF)</span>
-                    </a>
+                    <button onclick="openBenefitModal()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-brand-orange text-white font-extrabold text-xs shadow-lg hover:opacity-90 transition-all group">
+                        <i class="fa-solid fa-file-contract text-sm group-hover:scale-110 transition-transform"></i>
+                        <span>Lihat & Download Benefit Mitra (PDF)</span>
+                    </button>
                 </div>
 
                 <div class="space-y-4 text-xs text-gray-200 mb-10">
@@ -1360,6 +1436,129 @@
         </div>
     </div>
 
+    
+    <!-- ==================== DRAF BENEFIT MITRA MODAL ==================== -->
+    <div id="benefit-modal" class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-[2.5rem] max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden border border-black/10">
+            
+            <!-- Modal Header -->
+            <div id="benefit-modal-header" class="p-6 sm:p-8 bg-[#F5F5F7] border-b border-black/10 flex justify-between items-center shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-brand-orange/10 text-brand-orange text-lg flex items-center justify-center font-bold font-outfit">
+                        🎁
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-extrabold text-brand-orange uppercase tracking-widest block font-outfit">Dokumen Resmi Fasilitas</span>
+                        <h3 class="text-lg sm:text-xl font-black text-brand-dark font-outfit">Fasilitas & Benefit Mitra Franchise NDOG!</h3>
+                    </div>
+                </div>
+                <button id="benefit-modal-close-btn" onclick="closeBenefitModal()" class="w-10 h-10 rounded-full bg-black/5 hover:bg-black/10 text-gray-500 hover:text-brand-dark flex items-center justify-center transition-colors no-print">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content (Scrollable Benefit Document Body) -->
+            <div id="benefit-modal-content" class="p-6 sm:p-10 overflow-y-auto space-y-8 text-xs sm:text-sm text-gray-700 leading-relaxed font-light">
+                
+                <!-- Title & Header Info -->
+                <div class="text-center pb-6 border-b border-black/10">
+                    <h2 class="text-base sm:text-lg font-black text-brand-dark font-outfit uppercase tracking-wide">DOKUMEN RESMI FASILITAS & BENEFIT MITRA</h2>
+                    <p class="text-xs text-brand-orange font-bold font-outfit mt-1">MEREK KULINER NDOG! OFFICIAL SURABAYA</p>
+                    <p class="text-[11px] text-gray-400 mt-2">Paket Lisensi Merek & Full Support Operasional Kemitraan Franchise</p>
+                </div>
+
+                <!-- Promo Price Box -->
+                <div class="bg-gradient-to-r from-brand-orange/10 to-amber-500/10 p-5 rounded-2xl border border-brand-orange/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div>
+                        <span class="text-[10px] font-extrabold text-red-500 uppercase tracking-widest block font-outfit">🔥 Promo Limited Offer</span>
+                        <h4 class="text-base font-black text-brand-dark font-outfit">Biaya Lisensi Promo: Rp 10.000.000,-</h4>
+                        <p class="text-xs text-gray-500">Promo khusus 3 franchisor pertama (Harga Normal Rp 15 Juta)</p>
+                    </div>
+                    <span class="bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 text-xs font-black px-4 py-2 rounded-xl font-outfit shrink-0">
+                        100% Profit Milik Mitra (Bebas Royalty Fee!) 🚀
+                    </span>
+                </div>
+
+                <!-- 10 Full Support Items -->
+                <div class="space-y-6">
+                    <div class="p-4 rounded-2xl bg-[#F5F5F7] border border-black/5">
+                        <h4 class="font-bold text-brand-dark text-sm font-outfit mb-1 text-brand-orange">1. Lisensi Merek Official NDOG!</h4>
+                        <p>Hak penggunaan nama dan logo resmi NDOG! untuk lokasi usaha mitra. 100% laba bersih operasional selamanya menjadi hak milik mitra tanpa ada potongan bagi hasil atau royalty fee bulanan.</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-[#F5F5F7] border border-black/5">
+                        <h4 class="font-bold text-brand-dark text-sm font-outfit mb-1 text-brand-orange">2. Sistem & Aplikasi Kasir Kasio POS</h4>
+                        <p>Mitra mendapatkan akses gratis lisensi aplikasi kasir cerdas Kasio POS di tahun pertama untuk pencatatan transaksi harian, laporan laba rugi real-time dari HP, dan manajemen stok bahan baku.</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-[#F5F5F7] border border-black/5">
+                        <h4 class="font-bold text-brand-dark text-sm font-outfit mb-1 text-brand-orange">3. Pelatihan Komprehensif (Training SOP Dapur & Kasir)</h4>
+                        <p>Pendampingan training memasak sesuai SOP dapur pusat serta pelatihan operasional kasir bagi staf outlet mitra sampai benar-benar mahir.</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-[#F5F5F7] border border-black/5">
+                        <h4 class="font-bold text-brand-dark text-sm font-outfit mb-1 text-brand-orange">4. Dukungan Marketing & Desain Berkelanjutan</h4>
+                        <p>Support penuh dari tim marketing pusat untuk konsultasi operasional dan materi desain promosi (banner spanduk, poster promo opening, dan template postingan Instagram/TikTok).</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-[#F5F5F7] border border-black/5">
+                        <h4 class="font-bold text-brand-dark text-sm font-outfit mb-1 text-brand-orange">5. Listing Resmi di Website NDOG! Official & Google Maps</h4>
+                        <p>Lokasi outlet cabang mitra akan resmi dicantumkan pada halaman jaringan cabang di website official NDOG! lengkap dengan petunjuk lokasi Google Maps.</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-[#F5F5F7] border border-black/5">
+                        <h4 class="font-bold text-brand-dark text-sm font-outfit mb-1 text-brand-orange">6. Suplai Bahan Baku Terpusat (Rating Bintang 5)</h4>
+                        <p>Suplai bumbu inti dan bahan utama terstandar disuplai langsung dari Dapur Pusat Surabaya demi menjamin rasa 100% sama lezatnya dan meraih rating Bintang 5 di online food.</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-[#F5F5F7] border border-black/5">
+                        <h4 class="font-bold text-brand-dark text-sm font-outfit mb-1 text-brand-orange">7. Pendampingan Merchant Online Food</h4>
+                        <p>Setup dan pendaftaran merchant online food (GoFood, GrabFood, ShopeeFood) didampingi tim pusat agar outlet mitra siap menerima pesanan delivery sejak hari pertama Grand Opening.</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-[#F5F5F7] border border-black/5">
+                        <h4 class="font-bold text-brand-dark text-sm font-outfit mb-1 text-brand-orange">8. Starter Pack Branding Kit & Konten Media Sosial</h4>
+                        <p>Paket materi promosi digital lengkap dan template konten video promo siap pakai untuk mendukung promosi pembukaan cabang baru.</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-[#F5F5F7] border border-black/5">
+                        <h4 class="font-bold text-brand-dark text-sm font-outfit mb-1 text-brand-orange">9. Paket Starter Kit Pembukaan 50 Porsi Pertama</h4>
+                        <p>Termasuk: 50 butir telur segar, 50 pcs packaging boks khas NDOG!, 50 pcs sendok higienis, 50 pcs kantong plastik HD, MMT Banner Spanduk Pembukaan Grand Opening, serta Bumbu & Sambal Bawang Pusat 50 porsi.</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-[#F5F5F7] border border-black/5">
+                        <h4 class="font-bold text-brand-dark text-sm font-outfit mb-1 text-brand-orange">10. Legalitas Perjanjian Kerja Sama (PKS) Resmi</h4>
+                        <p>Draf akad Perjanjian Kerja Sama (PKS) yang jelas, aman, dan transparan untuk memberikan kepastian hukum dan perlindungan kedua belah pihak.</p>
+                    </div>
+                </div>
+
+                <!-- Official Benefit Verification Seal (No Signature Form) -->
+                <div class="pt-6 mt-6 border-t border-black/10 text-center font-outfit">
+                    <p class="font-extrabold text-brand-dark text-xs uppercase tracking-wider mb-0.5">DOKUMEN RESMI HAK BENEFIT MITRA FRANCHISE NDOG!</p>
+                    <p class="text-[11px] text-gray-500">Manajemen Pusat NDOG! Official Surabaya — WhatsApp Support: +62 851-3425-2310</p>
+                </div>
+
+            </div>
+
+            <!-- Modal Footer Action Bar -->
+            <div id="benefit-modal-footer" class="p-6 bg-[#F5F5F7] border-t border-black/10 flex flex-col sm:flex-row items-center justify-between gap-4 shrink-0 no-print">
+                <button onclick="window.print()" class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-white border border-black/10 text-xs font-bold text-brand-dark hover:bg-gray-100 transition-colors flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-print"></i> Cetak / Unduh Benefit Mitra (PDF)
+                </button>
+
+                <div class="flex items-center gap-3 w-full sm:w-auto">
+                    <button onclick="closeBenefitModal()" class="px-5 py-3 rounded-2xl border border-black/10 text-xs font-bold text-gray-500 hover:text-brand-dark transition-colors">
+                        Tutup
+                    </button>
+                    <a href="#form-pendaftaran" onclick="closeBenefitModal()" class="flex-1 sm:flex-none bg-gradient-to-r from-brand-orange to-amber-500 text-white font-extrabold text-xs px-6 py-3 rounded-2xl uppercase tracking-wider shadow-md hover:opacity-90 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp"></i> Amankan Slot Promo Rp 10jt
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <!-- ==================== FOOTER ==================== -->
     <footer class="bg-[#F5F5F7] py-12 border-t border-black/[0.04] text-center no-print">
         <div class="max-w-5xl mx-auto px-6">
@@ -1641,6 +1840,28 @@
 
         function closeReviewZoom() {
             const modal = document.getElementById('review-zoom-modal');
+            if (modal) {
+                modal.classList.add('opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+
+        // Benefit Mitra Modal Functions
+        function openBenefitModal() {
+            const modal = document.getElementById('benefit-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                }, 50);
+            }
+        }
+
+        function closeBenefitModal() {
+            const modal = document.getElementById('benefit-modal');
             if (modal) {
                 modal.classList.add('opacity-0');
                 setTimeout(() => {
