@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposal Kemitraan Franchise NDOG! – Rasa Juara, Cuan Maksimal</title>
+    <meta name="description" content="Peluang Usaha Franchise NDOG! – Modal Promo Rp 10 Juta, 100% keuntungan milik mitra, No Royalty Fee, SOP simpel, gratis Kasio POS, dan estimasi ROI < 2 bulan!">
+    <meta name="keywords" content="franchise ndog, waralaba nasi telur, kemitraan kuliner murah, franchise makanan surabaya, investasi kuliner">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="apple-touch-icon" href="assets/logo.png">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            orange: '#FF6B00',
+                            dark: '#18181B',
+                            light: '#FAFAFA',
+                            zinc: '#F4F4F5'
+                        }
+                    },
+                    fontFamily: {
+                        outfit: ['Outfit', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+
+        function openPksModal() {
+            const modal = document.getElementById('pks-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                }, 50);
+            }
+        }
+
+        function closePksModal() {
+            const modal = document.getElementById('pks-modal');
+            if (modal) {
+                modal.classList.add('opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+
+        // BEP Interactive Calculator Logic
+        function updateBepCalculation(portionValue) {
+            const portions = parseInt(portionValue) || 50;
+            const pricePerPortion = 15000;
+            const cogsPerPortion = 7000;
+            const monthlyOpex = 4500000;
+            const investmentCost = 10000000;
+            const daysInMonth = 30;
+
+            const monthlyPortions = portions * daysInMonth;
+            const grossRevenue = monthlyPortions * pricePerPortion;
+            const totalCogs = monthlyPortions * cogsPerPortion;
+            const netProfit = grossRevenue - totalCogs - monthlyOpex;
+
+            // Format numbers to IDR string
+            const formatRp = (num) => 'Rp ' + num.toLocaleString('id-ID');
+
+            // Update DOM displays
+            const portionDisplay = document.getElementById('bep-portion-display');
+            const dailyQty = document.getElementById('bep-daily-qty');
+            const monthlyQty = document.getElementById('bep-monthly-qty');
+            const monthlyFormula = document.getElementById('bep-monthly-formula');
+            const grossRevenueEl = document.getElementById('bep-gross-revenue');
+            const cogsEl = document.getElementById('bep-cogs');
+            const netProfitEl = document.getElementById('bep-net-profit');
+            const roiBadge = document.getElementById('bep-roi-badge');
+
+            if (portionDisplay) portionDisplay.textContent = portions;
+            if (dailyQty) dailyQty.textContent = portions + ' Porsi / hari';
+            if (monthlyQty) monthlyQty.textContent = monthlyPortions.toLocaleString('id-ID') + ' Porsi / bulan';
+            if (monthlyFormula) monthlyFormula.textContent = portions + ' porsi x 30 hari';
+            if (grossRevenueEl) grossRevenueEl.textContent = formatRp(grossRevenue);
+            if (cogsEl) cogsEl.textContent = '- ' + formatRp(totalCogs);
+
+            if (netProfitEl) {
+                if (netProfit > 0) {
+                    netProfitEl.textContent = formatRp(netProfit);
+                    netProfitEl.className = 'text-3xl sm:text-4xl font-black text-brand-orange font-outfit block';
+                } else {
+                    netProfitEl.textContent = formatRp(netProfit);
+                    netProfitEl.className = 'text-3xl sm:text-4xl font-black text-red-400 font-outfit block';
+                }
+            }
+
+            if (roiBadge) {
+                if (netProfit > 0) {
+                    const months = (investmentCost / netProfit).toFixed(1);
+                    roiBadge.textContent = `< ${months} Bulan! 🚀`;
+                    roiBadge.className = 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-black px-3 py-1 rounded-full font-outfit';
+                } else {
+                    roiBadge.textContent = 'Perlu Peningkatan Sales';
+                    roiBadge.className = 'bg-red-500/20 text-red-400 border border-red-500/30 text-xs font-black px-3 py-1 rounded-full font-outfit';
+                }
+            }
+        }
+
+        function setBepPreset(portions) {
+            const slider = document.getElementById('bep-range-slider');
+            if (slider) {
+                slider.value = portions;
+                updateBepCalculation(portions);
+            }
+
+            // Update active preset button styling
+            const buttons = document.querySelectorAll('.bep-preset-btn');
+            buttons.forEach(btn => {
+                btn.className = 'bep-preset-btn px-3 py-1.5 rounded-xl border border-black/10 bg-white text-gray-600 font-bold text-xs hover:border-brand-orange hover:text-brand-orange transition-colors';
+            });
+
+            // Highlight clicked button
+            if (event && event.target) {
+                event.target.className = 'bep-preset-btn px-3 py-1.5 rounded-xl border border-brand-orange bg-brand-orange text-white font-bold text-xs transition-colors shadow-sm';
+            }
+        }
+
+
+        // Online Food Review Slider Scroll Function
+        function scrollReviewSlider(direction) {
+            const container = document.getElementById('review-slider-container');
+            if (container) {
+                const scrollAmount = 500;
+                if (direction === 'left') {
+                    container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                } else {
+                    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                }
+            }
+        }
+
+
+        // Review Zoom Lightbox Functions
+        function openReviewZoom(imgSrc) {
+            const modal = document.getElementById('review-zoom-modal');
+            const img = document.getElementById('review-zoom-img');
+            if (modal && img) {
+                img.src = imgSrc;
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                }, 50);
+            }
+        }
+
+        function closeReviewZoom() {
+            const modal = document.getElementById('review-zoom-modal');
+            if (modal) {
+                modal.classList.add('opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+    </script>
+
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        .glass-header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        @media print {
+            /* Hide entire landing page wrapper & no-print elements */
+            #landing-page-wrapper,
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                font-family: Arial, sans-serif !important;
+            }
+
+            /* Un-hide and format PKS Modal for print/PDF export */
+            #pks-modal {
+                display: block !important;
+                position: static !important;
+                background: #ffffff !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                z-index: 99999 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+            }
+
+            #pks-modal > div {
+                border: none !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                max-width: 100% !important;
+                max-height: none !important;
+                overflow: visible !important;
+                background: #ffffff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            #pks-modal-header {
+                background: #ffffff !important;
+                border-bottom: 2px solid #000000 !important;
+                padding: 1rem 0 !important;
+            }
+
+            #pks-modal-close-btn,
+            #pks-modal-footer {
+                display: none !important;
+            }
+
+            #pks-modal-content {
+                overflow: visible !important;
+                max-height: none !important;
+                padding: 1.5rem 0 !important;
+                color: #000000 !important;
+                display: block !important;
+            }
+
+            #pks-modal-content * {
+                color: #000000 !important;
+            }
+
+            .pks-signature-block {
+                display: grid !important;
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                gap: 2rem !important;
+                text-align: center !important;
+                margin-top: 3rem !important;
+                padding-top: 2rem !important;
+                border-top: 1px solid #000000 !important;
+                page-break-inside: avoid !important;
+        }
+    </style>
+</head>
+<body class="bg-[#FAFAFA] text-brand-dark font-sans antialiased selection:bg-brand-orange selection:text-white overflow-x-hidden">
+
+    <div id="landing-page-wrapper">
+<!-- ==================== HEADER NAVBAR ==================== -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-header border-b border-black/[0.05] transition-all no-print">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Brand Logo & Back to Main Site -->
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="inline-flex items-center gap-2 group text-xs font-bold text-gray-500 hover:text-brand-dark transition-colors bg-black/[0.03] px-3.5 py-2 rounded-full border border-black/[0.04]">
+                    <i class="fa-solid fa-arrow-left transition-transform group-hover:-translate-x-1"></i>
+                    <span>Beranda</span>
+                </a>
+                <a href="index.html" class="flex items-center gap-2 text-lg font-bold tracking-tight font-outfit text-brand-dark">
+                    <div class="w-8 h-8 rounded-xl overflow-hidden border border-black/5 shadow-sm bg-white p-0.5 flex items-center justify-center">
+                        <img src="assets/logo.png" alt="NDOG! Logo" class="w-full h-full object-contain">
+                    </div>
+                    <span>NDOG! <span class="text-brand-orange">Franchise.</span></span>
+                </a>
+            </div>
+
+            <!-- Header Action CTA -->
+            <div class="flex items-center gap-3">
+                <button onclick="window.print()" class="hidden md:inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-black/10 text-xs font-bold text-gray-600 hover:bg-black/5 transition-colors">
+                    <i class="fa-solid fa-print"></i> Cetak Proposal
+                </button>
+                <a href="#form-pendaftaran" class="bg-gradient-to-r from-brand-orange to-amber-500 text-white font-extrabold text-xs px-5 py-2.5 rounded-full uppercase tracking-wider shadow-md hover:opacity-90 transition-all flex items-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> Amankan Slot Promo
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Spacer for Fixed Navbar -->
+    <div class="h-20 no-print"></div>
+
+    <!-- ==================== HERO PROPOSAL SECTION ==================== -->
+    <section class="py-16 lg:py-24 bg-gradient-to-b from-white via-[#FAFAFA] to-[#F5F5F7] relative overflow-hidden border-b border-black/[0.04]">
+        
+        <!-- Background Glows -->
+        <div class="absolute w-[500px] h-[500px] rounded-full bg-brand-orange/10 blur-[150px] top-0 right-0 pointer-events-none"></div>
+        <div class="absolute w-[400px] h-[400px] rounded-full bg-amber-400/10 blur-[130px] bottom-0 left-0 pointer-events-none"></div>
+
+        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+            
+            <!-- Limited Offer Tag -->
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 border border-red-500/20 text-red-600 text-xs font-extrabold tracking-wider uppercase mb-6 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span> PROMO KHUSUS 10 FRANCHISOR PERTAMA 🔥
+            </span>
+
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-brand-dark font-outfit leading-[1.1] mb-6">
+                PROPOSAL KEMITRAAN FRANCHISE<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-amber-500">NDOG!</span>
+            </h1>
+
+            <p class="text-lg sm:text-xl font-extrabold text-brand-dark font-outfit mb-4">
+                "Rasa Juara, Operasional Anti Ribet, Cuan Maksimal!"
+            </p>
+
+            <p class="text-sm sm:text-base text-gray-500 max-w-2xl mx-auto font-light leading-relaxed mb-10">
+                Peluang emas memiliki bisnis kuliner nasi telur kekinian dengan modal terjangkau, 100% keuntungan milik Anda, gratis sistem kasir Kasio POS, dan proyeksi balik modal dalam kurun waktu kurang dari 2 bulan!
+            </p>
+
+            <!-- Price Highlight Box -->
+            <div class="inline-flex flex-col sm:flex-row items-center gap-4 p-4 sm:px-8 sm:py-5 rounded-3xl bg-white border border-brand-orange/30 shadow-2xl mb-10">
+                <div class="text-left">
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Harga Kemitraan Lisensi Merek</p>
+                    <div class="flex items-baseline gap-3">
+                        <span class="text-sm text-gray-400 line-through font-bold">Rp 15.000.000</span>
+                        <span class="text-3xl sm:text-4xl font-black text-brand-orange font-outfit">Rp 10.000.000</span>
+                    </div>
+                </div>
+                <div class="h-8 w-px bg-gray-200 hidden sm:block"></div>
+                <span class="bg-gradient-to-r from-brand-orange to-amber-500 text-white font-extrabold text-xs px-4 py-2 rounded-full uppercase tracking-wider">
+                    Diskon Rp 5 Juta!
+                </span>
+            </div>
+
+            <!-- Quick Action Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto no-print">
+                <a href="#form-pendaftaran" class="w-full sm:w-auto flex-1 bg-gradient-to-r from-brand-orange to-amber-500 text-white font-extrabold py-4 px-8 rounded-2xl text-xs uppercase tracking-wider hover:opacity-90 transition-opacity shadow-lg flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Amankan Slot Promo Rp 10 Juta
+                </a>
+                <button onclick="window.print()" class="w-full sm:w-auto bg-white border border-black/10 text-brand-dark font-bold py-4 px-6 rounded-2xl text-xs hover:bg-gray-50 transition-colors shadow-sm flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-download"></i> Cetak / Simpan PDF
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ==================== SECTION 1: TENTANG NDOG! ==================== -->
+    <section class="py-16 bg-white border-b border-black/[0.03]">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <span class="text-xs font-bold tracking-widest text-brand-orange uppercase block mb-2 font-outfit">01. Profil Usaha</span>
+                    <h2 class="text-2xl sm:text-4xl font-black text-brand-dark font-outfit mb-6 leading-tight">
+                        Tentang <span class="text-brand-orange">NDOG!</span>
+                    </h2>
+                    <p class="text-sm sm:text-base text-gray-600 leading-relaxed font-light mb-4">
+                        <strong class="font-bold text-brand-dark">NDOG!</strong> hadir sebagai solusi <em>comfort food</em> berbahan dasar telur yang selalu dicari setiap hari. Bukan sekadar tren sesaat, menu olahan telur krispi, geprek, dan bakar disajikan bersama nasi hangat dan sambal bawang rahasia adalah makanan pokok yang digemari oleh semua kalangan—mulai dari mahasiswa hingga pekerja kantoran.
+                    </p>
+                    <p class="text-sm sm:text-base text-gray-600 leading-relaxed font-light">
+                        Kami menawarkan sistem bisnis kuliner yang sudah teruji di 2 outlet Surabaya, lezat, dan sangat mudah dijalankan bahkan oleh pemula sekalipun.
+                    </p>
+                </div>
+
+                <div class="md:w-1/2 w-full">
+                    <div class="p-8 rounded-[2.5rem] bg-[#F5F5F7] border border-black/5 shadow-inner space-y-4">
+                        <div class="flex items-center gap-4 p-4 rounded-2xl bg-white shadow-sm border border-black/[0.02]">
+                            <div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange text-lg flex items-center justify-center font-bold">🍳</div>
+                            <div>
+                                <h4 class="font-bold text-brand-dark text-xs font-outfit">Comfort Food Harian</h4>
+                                <p class="text-[11px] text-gray-500">Pasar luas dari pagi hingga malam larut</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 p-4 rounded-2xl bg-white shadow-sm border border-black/[0.02]">
+                            <div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange text-lg flex items-center justify-center font-bold">🏪</div>
+                            <div>
+                                <h4 class="font-bold text-brand-dark text-xs font-outfit">Teruji di 2 Outlet Surabaya</h4>
+                                <p class="text-[11px] text-gray-500">Ekosistem digital Kasio POS & Delivery siap pakai</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 p-4 rounded-2xl bg-white shadow-sm border border-black/[0.02]">
+                            <div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange text-lg flex items-center justify-center font-bold">🚀</div>
+                            <div>
+                                <h4 class="font-bold text-brand-dark text-xs font-outfit">Mudah Bagi Pemula</h4>
+                                <p class="text-[11px] text-gray-500">SOP jelas & bumbu inti disuplai terpusat</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SECTION 2: MENGAPA MEMILIH KEMITRAAN NDOG!? ==================== -->
+    <section class="py-20 bg-[#FAFAFA] border-b border-black/[0.03]">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-xs font-bold tracking-widest text-brand-orange uppercase block mb-2 font-outfit">02. Keunggulan Bisnis</span>
+                <h2 class="text-2xl sm:text-4xl font-black text-brand-dark font-outfit mb-4">
+                    Mengapa Memilih Kemitraan <span class="text-brand-orange">NDOG!</span>?
+                </h2>
+                <p class="text-xs sm:text-sm text-gray-500 max-w-xl mx-auto font-light">
+                    Berbeda dengan franchise kuliner lainnya, NDOG! dirancang agar mitra bisa langsung fokus berjualan tanpa pusing memikirkan sistem.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Point 1 -->
+                <div class="p-8 rounded-[2rem] bg-white border border-black/5 shadow-md hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 rounded-2xl bg-brand-orange/10 text-brand-orange text-2xl flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-coins"></i>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-brand-dark font-outfit mb-3">100% Keuntungan Milik Anda</h3>
+                    <p class="text-xs text-gray-600 leading-relaxed font-light">
+                        Tidak ada bagi hasil atau Royalty Fee bulanan. Seluruh keuntungan bersih hasil penjualan operasional selamanya menjadi milik mitra.
+                    </p>
+                </div>
+
+                <!-- Point 2 -->
+                <div class="p-8 rounded-[2rem] bg-white border border-black/5 shadow-md hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 text-2xl flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-fire-burner"></i>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-brand-dark font-outfit mb-3">Sistem Operasional & SOP Super Mudah</h3>
+                    <p class="text-xs text-gray-600 leading-relaxed font-light">
+                        Tidak butuh koki mahal berketerampilan khusus. Siapa pun karyawan Anda bisa memasak menu NDOG! berkat SOP yang rapi dan terstruktur.
+                    </p>
+                </div>
+
+                <!-- Point 3 -->
+                <div class="p-8 rounded-[2rem] bg-white border border-black/5 shadow-md hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 rounded-2xl bg-red-500/10 text-red-500 text-2xl flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-brand-dark font-outfit mb-3">Kualitas Konsisten (Bahan Baku Terpusat)</h3>
+                    <p class="text-xs text-gray-600 leading-relaxed font-light">
+                        Bumbu inti dan bahan utama disuplai langsung dari dapur pusat kami di Surabaya, sehingga cita rasa khas di setiap cabang dijamin 100% sama lezatnya.
+                    </p>
+                </div>
+
+                <!-- Point 4 -->
+                <div class="p-8 rounded-[2rem] bg-white border border-black/5 shadow-md hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-500 text-2xl flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-cash-register"></i>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-brand-dark font-outfit mb-3">Gratis Kasio POS di Tahun Pertama</h3>
+                    <p class="text-xs text-gray-600 leading-relaxed font-light">
+                        Tinggalkan pencatatan manual. Semua mitra mendapatkan akses gratis lisensi aplikasi kasir cerdas Kasio POS untuk memantau penjualan harian secara real-time dari HP.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ==================== SECTION: KASIO POS INTEGRATION ==================== -->
+    <section class="py-20 bg-gradient-to-b from-white to-[#F5F5F7] border-b border-black/[0.03] relative overflow-hidden">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-12 mb-12">
+                <div class="lg:w-3/5">
+                    <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 text-xs font-extrabold tracking-wider uppercase mb-4 font-outfit">
+                        <i class="fa-solid fa-microchip"></i> Fitur Teknologi Kasir
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-black text-brand-dark font-outfit mb-4">
+                        Kelola Bisnis Otomatis dengan <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Kasio POS.</span>
+                    </h2>
+                    <p class="text-sm sm:text-base text-gray-600 font-light leading-relaxed mb-6">
+                        Setiap mitra NDOG! langsung dibekali lisensi sistem kasir cerdas <strong class="font-bold text-brand-dark">Kasio POS gratis di tahun pertama</strong>. Memantau laporan omset harian, stok bahan baku, hingga pesanan QR meja dine-in bisa dilakukan secara real-time langsung dari HP Anda di mana saja!
+                    </p>
+
+                    <!-- Features Pills -->
+                    <div class="grid grid-cols-2 gap-3 mb-8 text-xs font-semibold text-gray-700">
+                        <div class="flex items-center gap-2.5 p-3 rounded-xl bg-white border border-black/5 shadow-sm">
+                            <i class="fa-solid fa-chart-pie text-blue-500"></i> Laporan Real-Time HP
+                        </div>
+                        <div class="flex items-center gap-2.5 p-3 rounded-xl bg-white border border-black/5 shadow-sm">
+                            <i class="fa-solid fa-qrcode text-blue-500"></i> QR Order Dine-In
+                        </div>
+                        <div class="flex items-center gap-2.5 p-3 rounded-xl bg-white border border-black/5 shadow-sm">
+                            <i class="fa-solid fa-boxes-stacked text-blue-500"></i> Manajemen Stok Otomatis
+                        </div>
+                        <div class="flex items-center gap-2.5 p-3 rounded-xl bg-white border border-black/5 shadow-sm">
+                            <i class="fa-solid fa-receipt text-blue-500"></i> Struk Thermal & Whatsapp
+                        </div>
+                    </div>
+
+                    <!-- Cool Link Button to kasio.id -->
+                    <a href="https://kasio.id" target="_blank" class="inline-flex items-center gap-3 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-extrabold text-xs uppercase tracking-wider hover:opacity-90 transition-all shadow-lg hover:shadow-blue-500/25 group">
+                        <span>Pelajari Selengkapnya di Kasio.id</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-sm group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+                    </a>
+                </div>
+
+                <div class="lg:w-2/5 w-full">
+                    <!-- Glassy Feature Card -->
+                    <div class="p-8 rounded-[2.5rem] bg-gradient-to-b from-blue-900 to-indigo-950 text-white border border-blue-500/20 shadow-2xl relative overflow-hidden">
+                        <div class="absolute -right-10 -top-10 w-40 h-40 bg-blue-500/20 rounded-full blur-2xl"></div>
+                        <i class="fa-solid fa-cash-register text-4xl text-blue-400 mb-4"></i>
+                        <h4 class="text-xl font-bold font-outfit mb-2">Tanpa Catat Manual!</h4>
+                        <p class="text-xs text-blue-100/80 leading-relaxed font-light mb-6">
+                            Lupakan nota kertas. Semua transaksi pelanggan langsung terekam dan bisa langsung diakses laporan bulanannya secara transparan.
+                        </p>
+                        <div class="flex items-center gap-2 text-[11px] font-bold text-blue-300">
+                            <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                            <span>Terintegrasi Sistem Outlet NDOG!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5-Image Horizontal Slider for User Uploads -->
+            <div class="mt-8">
+                <div class="flex items-center justify-between mb-4 px-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-gray-400 font-outfit">Preview Tampilan Aplikasi Kasio POS (6 Foto Slider)</span>
+                    <span class="text-[11px] text-gray-400 flex items-center gap-1"><i class="fa-solid fa-arrows-left-right text-xs"></i> Geser ke samping</span>
+                </div>
+
+                <!-- Slider Container -->
+                <div class="flex gap-4 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory">
+                    <!-- Image Card 1 -->
+                    <div class="snap-center shrink-0 w-64 sm:w-72 h-44 rounded-2xl bg-white border border-black/10 shadow-md overflow-hidden relative group flex flex-col items-center justify-center p-4 text-center">
+                        <img src="assets/kasio_1.jpg" alt="Kasio POS Preview 1" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.style.display='none'">
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-2">
+                            <i class="fa-solid fa-mobile-screen-button"></i>
+                        </div>
+                        <p class="font-bold text-xs text-brand-dark font-outfit">Dashboard Kasir HP</p>
+                        <span class="text-[10px] text-gray-400">Upload Foto 1 (assets/kasio_1.jpg)</span>
+                    </div>
+
+                    <!-- Image Card 2 -->
+                    <div class="snap-center shrink-0 w-64 sm:w-72 h-44 rounded-2xl bg-white border border-black/10 shadow-md overflow-hidden relative group flex flex-col items-center justify-center p-4 text-center">
+                        <img src="assets/kasio_2.jpg" alt="Kasio POS Preview 2" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.style.display='none'">
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-2">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <p class="font-bold text-xs text-brand-dark font-outfit">Laporan Laba Rugi</p>
+                        <span class="text-[10px] text-gray-400">Upload Foto 2 (assets/kasio_2.jpg)</span>
+                    </div>
+
+                    <!-- Image Card 3 -->
+                    <div class="snap-center shrink-0 w-64 sm:w-72 h-44 rounded-2xl bg-white border border-black/10 shadow-md overflow-hidden relative group flex flex-col items-center justify-center p-4 text-center">
+                        <img src="assets/kasio_3.jpg" alt="Kasio POS Preview 3" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.style.display='none'">
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-2">
+                            <i class="fa-solid fa-qrcode"></i>
+                        </div>
+                        <p class="font-bold text-xs text-brand-dark font-outfit">Sistem QR Order Meja</p>
+                        <span class="text-[10px] text-gray-400">Upload Foto 3 (assets/kasio_3.jpg)</span>
+                    </div>
+
+                    <!-- Image Card 4 -->
+                    <div class="snap-center shrink-0 w-64 sm:w-72 h-44 rounded-2xl bg-white border border-black/10 shadow-md overflow-hidden relative group flex flex-col items-center justify-center p-4 text-center">
+                        <img src="assets/kasio_4.jpg" alt="Kasio POS Preview 4" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.style.display='none'">
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-2">
+                            <i class="fa-solid fa-boxes-stacked"></i>
+                        </div>
+                        <p class="font-bold text-xs text-brand-dark font-outfit">Manajemen Stok Bahan</p>
+                        <span class="text-[10px] text-gray-400">Upload Foto 4 (assets/kasio_4.jpg)</span>
+                    </div>
+
+                    <!-- Image Card 5 -->
+                    <div class="snap-center shrink-0 w-64 sm:w-72 h-44 rounded-2xl bg-white border border-black/10 shadow-md overflow-hidden relative group flex flex-col items-center justify-center p-4 text-center">
+                        <img src="assets/kasio_5.jpg" alt="Kasio POS Preview 5" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.style.display='none'">
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-2">
+                            <i class="fa-solid fa-receipt"></i>
+                        </div>
+                        <p class="font-bold text-xs text-brand-dark font-outfit">Cetak Struk Digital</p>
+                        <span class="text-[10px] text-gray-400">Upload Foto 5 (assets/kasio_5.jpg)</span>
+                    </div>
+
+                    <!-- Image Card 6 -->
+                    <div class="snap-center shrink-0 w-64 sm:w-72 h-44 rounded-2xl bg-white border border-black/10 shadow-md overflow-hidden relative group flex flex-col items-center justify-center p-4 text-center">
+                        <img src="assets/kasio_6.jpg" alt="Kasio POS Preview 6" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.style.display='none'">
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-2">
+                            <i class="fa-solid fa-store"></i>
+                        </div>
+                        <p class="font-bold text-xs text-brand-dark font-outfit">Analitik Multicabang</p>
+                        <span class="text-[10px] text-gray-400">Upload Foto 6 (assets/kasio_6.jpg)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ==================== SECTION: ONLINE FOOD REVIEWS (BINTANG 5) ==================== -->
+    <section class="py-20 bg-white border-b border-black/[0.03]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+                <div>
+                    <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-600 text-xs font-extrabold tracking-wider uppercase mb-3 font-outfit">
+                        <i class="fa-solid fa-star text-amber-500"></i> Bukti Kepuasan Pelanggan
+                    </span>
+                    <h2 class="text-2xl sm:text-4xl font-black text-brand-dark font-outfit mb-3">
+                        Terbukti Meraih Rating <span class="text-brand-orange">Bintang 5 ⭐</span> di Online Food
+                    </h2>
+                    <p class="text-xs sm:text-sm text-gray-500 max-w-xl font-light">
+                        Bukti nyata rasa juara NDOG! dari ulasan positif pelanggan setia di GoFood, GrabFood, dan ShopeeFood. Rasa teruji, repeat order tinggi!
+                    </p>
+                </div>
+
+                <!-- Slider Navigation Controls -->
+                <div class="flex items-center gap-3 shrink-0">
+                    <button type="button" onclick="scrollReviewSlider('left')" class="w-12 h-12 rounded-full border border-black/10 hover:border-brand-orange hover:bg-brand-orange hover:text-white text-gray-700 flex items-center justify-center transition-all shadow-sm">
+                        <i class="fa-solid fa-chevron-left text-sm"></i>
+                    </button>
+                    <button type="button" onclick="scrollReviewSlider('right')" class="w-12 h-12 rounded-full border border-black/10 hover:border-brand-orange hover:bg-brand-orange hover:text-white text-gray-700 flex items-center justify-center transition-all shadow-sm">
+                        <i class="fa-solid fa-chevron-right text-sm"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Horizontal Slider Container (10 Cards iPhone 6.7") -->
+            <div id="review-slider-container" class="flex gap-8 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-10 pt-4 no-scrollbar items-stretch" style="scrollbar-width: none; -ms-overflow-style: none;">
+
+                <!-- Review Card 1 (Exact iPhone 6.7" Native Ratio: 1290 x 2796 px) -->
+                <div class="snap-start shrink-0 w-[300px] sm:w-[380px] lg:w-[440px] rounded-[2.5rem] bg-white border border-black/10 shadow-2xl overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-3 hover:shadow-brand-orange/20 group" onclick="openReviewZoom('assets/review_1.jpg')">
+                    
+                    <!-- Top Header Bar -->
+                    <div class="p-4 bg-white border-b border-black/5 flex items-center justify-between z-10 shrink-0">
+                        <span class="text-xs font-extrabold text-amber-500 uppercase tracking-widest flex items-center gap-1.5 font-outfit">
+                            <i class="fa-solid fa-star text-amber-400"></i> 5.0 RATING
+                        </span>
+                        <span class="text-xs font-extrabold text-brand-dark bg-black/5 px-3 py-1 rounded-full font-outfit">
+                            Card #1
+                        </span>
+                    </div>
+
+                    <!-- Native 1290x2796 iPhone 6.7" Aspect Ratio Container (aspect-[1290/2796]) -->
+                    <div class="w-full aspect-[1290/2796] relative bg-gray-50 overflow-hidden flex items-center justify-center">
+                        <img src="assets/review_1.jpg" alt="Review Online Food 1 (iPhone 6.7 inch 1290x2796)" class="w-full h-full object-cover z-10 relative transition-transform duration-300 group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        
+                        <!-- Fallback UI if image is not uploaded -->
+                        <div class="hidden absolute inset-0 flex-col items-center justify-center p-8 text-center bg-gray-900 text-white space-y-4 z-0 w-full">
+                            <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl shadow-sm">
+                                ⭐
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-center text-amber-400 text-sm gap-1">
+                                    ★★★★★
+                                </div>
+                                <h4 class="text-sm font-bold text-white font-outfit">Review Mockup #1</h4>
+                                <p class="text-xs text-gray-400 font-light">Resolusi Asli 6.7":<br><code class="text-brand-orange font-mono">1290 x 2796 px</code></p>
+                                <p class="text-[10px] text-gray-500 font-light">Upload ke:<br><code class="text-brand-orange font-mono">assets/review_1.jpg</code></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Review Card 2 (Exact iPhone 6.7" Native Ratio: 1290 x 2796 px) -->
+                <div class="snap-start shrink-0 w-[300px] sm:w-[380px] lg:w-[440px] rounded-[2.5rem] bg-white border border-black/10 shadow-2xl overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-3 hover:shadow-brand-orange/20 group" onclick="openReviewZoom('assets/review_2.jpg')">
+                    
+                    <!-- Top Header Bar -->
+                    <div class="p-4 bg-white border-b border-black/5 flex items-center justify-between z-10 shrink-0">
+                        <span class="text-xs font-extrabold text-amber-500 uppercase tracking-widest flex items-center gap-1.5 font-outfit">
+                            <i class="fa-solid fa-star text-amber-400"></i> 5.0 RATING
+                        </span>
+                        <span class="text-xs font-extrabold text-brand-dark bg-black/5 px-3 py-1 rounded-full font-outfit">
+                            Card #2
+                        </span>
+                    </div>
+
+                    <!-- Native 1290x2796 iPhone 6.7" Aspect Ratio Container (aspect-[1290/2796]) -->
+                    <div class="w-full aspect-[1290/2796] relative bg-gray-50 overflow-hidden flex items-center justify-center">
+                        <img src="assets/review_2.jpg" alt="Review Online Food 2 (iPhone 6.7 inch 1290x2796)" class="w-full h-full object-cover z-10 relative transition-transform duration-300 group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        
+                        <!-- Fallback UI if image is not uploaded -->
+                        <div class="hidden absolute inset-0 flex-col items-center justify-center p-8 text-center bg-gray-900 text-white space-y-4 z-0 w-full">
+                            <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl shadow-sm">
+                                ⭐
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-center text-amber-400 text-sm gap-1">
+                                    ★★★★★
+                                </div>
+                                <h4 class="text-sm font-bold text-white font-outfit">Review Mockup #2</h4>
+                                <p class="text-xs text-gray-400 font-light">Resolusi Asli 6.7":<br><code class="text-brand-orange font-mono">1290 x 2796 px</code></p>
+                                <p class="text-[10px] text-gray-500 font-light">Upload ke:<br><code class="text-brand-orange font-mono">assets/review_2.jpg</code></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Review Card 3 (Exact iPhone 6.7" Native Ratio: 1290 x 2796 px) -->
+                <div class="snap-start shrink-0 w-[300px] sm:w-[380px] lg:w-[440px] rounded-[2.5rem] bg-white border border-black/10 shadow-2xl overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-3 hover:shadow-brand-orange/20 group" onclick="openReviewZoom('assets/review_3.jpg')">
+                    
+                    <!-- Top Header Bar -->
+                    <div class="p-4 bg-white border-b border-black/5 flex items-center justify-between z-10 shrink-0">
+                        <span class="text-xs font-extrabold text-amber-500 uppercase tracking-widest flex items-center gap-1.5 font-outfit">
+                            <i class="fa-solid fa-star text-amber-400"></i> 5.0 RATING
+                        </span>
+                        <span class="text-xs font-extrabold text-brand-dark bg-black/5 px-3 py-1 rounded-full font-outfit">
+                            Card #3
+                        </span>
+                    </div>
+
+                    <!-- Native 1290x2796 iPhone 6.7" Aspect Ratio Container (aspect-[1290/2796]) -->
+                    <div class="w-full aspect-[1290/2796] relative bg-gray-50 overflow-hidden flex items-center justify-center">
+                        <img src="assets/review_3.jpg" alt="Review Online Food 3 (iPhone 6.7 inch 1290x2796)" class="w-full h-full object-cover z-10 relative transition-transform duration-300 group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        
+                        <!-- Fallback UI if image is not uploaded -->
+                        <div class="hidden absolute inset-0 flex-col items-center justify-center p-8 text-center bg-gray-900 text-white space-y-4 z-0 w-full">
+                            <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl shadow-sm">
+                                ⭐
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-center text-amber-400 text-sm gap-1">
+                                    ★★★★★
+                                </div>
+                                <h4 class="text-sm font-bold text-white font-outfit">Review Mockup #3</h4>
+                                <p class="text-xs text-gray-400 font-light">Resolusi Asli 6.7":<br><code class="text-brand-orange font-mono">1290 x 2796 px</code></p>
+                                <p class="text-[10px] text-gray-500 font-light">Upload ke:<br><code class="text-brand-orange font-mono">assets/review_3.jpg</code></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Review Card 4 (Exact iPhone 6.7" Native Ratio: 1290 x 2796 px) -->
+                <div class="snap-start shrink-0 w-[300px] sm:w-[380px] lg:w-[440px] rounded-[2.5rem] bg-white border border-black/10 shadow-2xl overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-3 hover:shadow-brand-orange/20 group" onclick="openReviewZoom('assets/review_4.jpg')">
+                    
+                    <!-- Top Header Bar -->
+                    <div class="p-4 bg-white border-b border-black/5 flex items-center justify-between z-10 shrink-0">
+                        <span class="text-xs font-extrabold text-amber-500 uppercase tracking-widest flex items-center gap-1.5 font-outfit">
+                            <i class="fa-solid fa-star text-amber-400"></i> 5.0 RATING
+                        </span>
+                        <span class="text-xs font-extrabold text-brand-dark bg-black/5 px-3 py-1 rounded-full font-outfit">
+                            Card #4
+                        </span>
+                    </div>
+
+                    <!-- Native 1290x2796 iPhone 6.7" Aspect Ratio Container (aspect-[1290/2796]) -->
+                    <div class="w-full aspect-[1290/2796] relative bg-gray-50 overflow-hidden flex items-center justify-center">
+                        <img src="assets/review_4.jpg" alt="Review Online Food 4 (iPhone 6.7 inch 1290x2796)" class="w-full h-full object-cover z-10 relative transition-transform duration-300 group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        
+                        <!-- Fallback UI if image is not uploaded -->
+                        <div class="hidden absolute inset-0 flex-col items-center justify-center p-8 text-center bg-gray-900 text-white space-y-4 z-0 w-full">
+                            <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl shadow-sm">
+                                ⭐
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-center text-amber-400 text-sm gap-1">
+                                    ★★★★★
+                                </div>
+                                <h4 class="text-sm font-bold text-white font-outfit">Review Mockup #4</h4>
+                                <p class="text-xs text-gray-400 font-light">Resolusi Asli 6.7":<br><code class="text-brand-orange font-mono">1290 x 2796 px</code></p>
+                                <p class="text-[10px] text-gray-500 font-light">Upload ke:<br><code class="text-brand-orange font-mono">assets/review_4.jpg</code></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Review Card 5 (Exact iPhone 6.7" Native Ratio: 1290 x 2796 px) -->
+                <div class="snap-start shrink-0 w-[300px] sm:w-[380px] lg:w-[440px] rounded-[2.5rem] bg-white border border-black/10 shadow-2xl overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-3 hover:shadow-brand-orange/20 group" onclick="openReviewZoom('assets/review_5.jpg')">
+                    
+                    <!-- Top Header Bar -->
+                    <div class="p-4 bg-white border-b border-black/5 flex items-center justify-between z-10 shrink-0">
+                        <span class="text-xs font-extrabold text-amber-500 uppercase tracking-widest flex items-center gap-1.5 font-outfit">
+                            <i class="fa-solid fa-star text-amber-400"></i> 5.0 RATING
+                        </span>
+                        <span class="text-xs font-extrabold text-brand-dark bg-black/5 px-3 py-1 rounded-full font-outfit">
+                            Card #5
+                        </span>
+                    </div>
+
+                    <!-- Native 1290x2796 iPhone 6.7" Aspect Ratio Container (aspect-[1290/2796]) -->
+                    <div class="w-full aspect-[1290/2796] relative bg-gray-50 overflow-hidden flex items-center justify-center">
+                        <img src="assets/review_5.jpg" alt="Review Online Food 5 (iPhone 6.7 inch 1290x2796)" class="w-full h-full object-cover z-10 relative transition-transform duration-300 group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        
+                        <!-- Fallback UI if image is not uploaded -->
+                        <div class="hidden absolute inset-0 flex-col items-center justify-center p-8 text-center bg-gray-900 text-white space-y-4 z-0 w-full">
+                            <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl shadow-sm">
+                                ⭐
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-center text-amber-400 text-sm gap-1">
+                                    ★★★★★
+                                </div>
+                                <h4 class="text-sm font-bold text-white font-outfit">Review Mockup #5</h4>
+                                <p class="text-xs text-gray-400 font-light">Resolusi Asli 6.7":<br><code class="text-brand-orange font-mono">1290 x 2796 px</code></p>
+                                <p class="text-[10px] text-gray-500 font-light">Upload ke:<br><code class="text-brand-orange font-mono">assets/review_5.jpg</code></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Review Card 6 (Exact iPhone 6.7" Native Ratio: 1290 x 2796 px) -->
+                <div class="snap-start shrink-0 w-[300px] sm:w-[380px] lg:w-[440px] rounded-[2.5rem] bg-white border border-black/10 shadow-2xl overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-3 hover:shadow-brand-orange/20 group" onclick="openReviewZoom('assets/review_6.jpg')">
+                    
+                    <!-- Top Header Bar -->
+                    <div class="p-4 bg-white border-b border-black/5 flex items-center justify-between z-10 shrink-0">
+                        <span class="text-xs font-extrabold text-amber-500 uppercase tracking-widest flex items-center gap-1.5 font-outfit">
+                            <i class="fa-solid fa-star text-amber-400"></i> 5.0 RATING
+                        </span>
+                        <span class="text-xs font-extrabold text-brand-dark bg-black/5 px-3 py-1 rounded-full font-outfit">
+                            Card #6
+                        </span>
+                    </div>
+
+                    <!-- Native 1290x2796 iPhone 6.7" Aspect Ratio Container (aspect-[1290/2796]) -->
+                    <div class="w-full aspect-[1290/2796] relative bg-gray-50 overflow-hidden flex items-center justify-center">
+                        <img src="assets/review_6.jpg" alt="Review Online Food 6 (iPhone 6.7 inch 1290x2796)" class="w-full h-full object-cover z-10 relative transition-transform duration-300 group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        
+                        <!-- Fallback UI if image is not uploaded -->
+                        <div class="hidden absolute inset-0 flex-col items-center justify-center p-8 text-center bg-gray-900 text-white space-y-4 z-0 w-full">
+                            <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl shadow-sm">
+                                ⭐
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-center text-amber-400 text-sm gap-1">
+                                    ★★★★★
+                                </div>
+                                <h4 class="text-sm font-bold text-white font-outfit">Review Mockup #6</h4>
+                                <p class="text-xs text-gray-400 font-light">Resolusi Asli 6.7":<br><code class="text-brand-orange font-mono">1290 x 2796 px</code></p>
+                                <p class="text-[10px] text-gray-500 font-light">Upload ke:<br><code class="text-brand-orange font-mono">assets/review_6.jpg</code></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Review Card 7 (Exact iPhone 6.7" Native Ratio: 1290 x 2796 px) -->
+                <div class="snap-start shrink-0 w-[300px] sm:w-[380px] lg:w-[440px] rounded-[2.5rem] bg-white border border-black/10 shadow-2xl overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-3 hover:shadow-brand-orange/20 group" onclick="openReviewZoom('assets/review_7.jpg')">
+                    
+                    <!-- Top Header Bar -->
+                    <div class="p-4 bg-white border-b border-black/5 flex items-center justify-between z-10 shrink-0">
+                        <span class="text-xs font-extrabold text-amber-500 uppercase tracking-widest flex items-center gap-1.5 font-outfit">
+                            <i class="fa-solid fa-star text-amber-400"></i> 5.0 RATING
+                        </span>
+                        <span class="text-xs font-extrabold text-brand-dark bg-black/5 px-3 py-1 rounded-full font-outfit">
+                            Card #7
+                        </span>
+                    </div>
+
+                    <!-- Native 1290x2796 iPhone 6.7" Aspect Ratio Container (aspect-[1290/2796]) -->
+                    <div class="w-full aspect-[1290/2796] relative bg-gray-50 overflow-hidden flex items-center justify-center">
+                        <img src="assets/review_7.jpg" alt="Review Online Food 7 (iPhone 6.7 inch 1290x2796)" class="w-full h-full object-cover z-10 relative transition-transform duration-300 group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        
+                        <!-- Fallback UI if image is not uploaded -->
+                        <div class="hidden absolute inset-0 flex-col items-center justify-center p-8 text-center bg-gray-900 text-white space-y-4 z-0 w-full">
+                            <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl shadow-sm">
+                                ⭐
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-center text-amber-400 text-sm gap-1">
+                                    ★★★★★
+                                </div>
+                                <h4 class="text-sm font-bold text-white font-outfit">Review Mockup #7</h4>
+                                <p class="text-xs text-gray-400 font-light">Resolusi Asli 6.7":<br><code class="text-brand-orange font-mono">1290 x 2796 px</code></p>
+                                <p class="text-[10px] text-gray-500 font-light">Upload ke:<br><code class="text-brand-orange font-mono">assets/review_7.jpg</code></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Review Card 8 (Exact iPhone 6.7" Native Ratio: 1290 x 2796 px) -->
+                <div class="snap-start shrink-0 w-[300px] sm:w-[380px] lg:w-[440px] rounded-[2.5rem] bg-white border border-black/10 shadow-2xl overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-3 hover:shadow-brand-orange/20 group" onclick="openReviewZoom('assets/review_8.jpg')">
+                    
+                    <!-- Top Header Bar -->
+                    <div class="p-4 bg-white border-b border-black/5 flex items-center justify-between z-10 shrink-0">
+                        <span class="text-xs font-extrabold text-amber-500 uppercase tracking-widest flex items-center gap-1.5 font-outfit">
+                            <i class="fa-solid fa-star text-amber-400"></i> 5.0 RATING
+                        </span>
+                        <span class="text-xs font-extrabold text-brand-dark bg-black/5 px-3 py-1 rounded-full font-outfit">
+                            Card #8
+                        </span>
+                    </div>
+
+                    <!-- Native 1290x2796 iPhone 6.7" Aspect Ratio Container (aspect-[1290/2796]) -->
+                    <div class="w-full aspect-[1290/2796] relative bg-gray-50 overflow-hidden flex items-center justify-center">
+                        <img src="assets/review_8.jpg" alt="Review Online Food 8 (iPhone 6.7 inch 1290x2796)" class="w-full h-full object-cover z-10 relative transition-transform duration-300 group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        
+                        <!-- Fallback UI if image is not uploaded -->
+                        <div class="hidden absolute inset-0 flex-col items-center justify-center p-8 text-center bg-gray-900 text-white space-y-4 z-0 w-full">
+                            <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl shadow-sm">
+                                ⭐
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-center text-amber-400 text-sm gap-1">
+                                    ★★★★★
+                                </div>
+                                <h4 class="text-sm font-bold text-white font-outfit">Review Mockup #8</h4>
+                                <p class="text-xs text-gray-400 font-light">Resolusi Asli 6.7":<br><code class="text-brand-orange font-mono">1290 x 2796 px</code></p>
+                                <p class="text-[10px] text-gray-500 font-light">Upload ke:<br><code class="text-brand-orange font-mono">assets/review_8.jpg</code></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Review Card 9 (Exact iPhone 6.7" Native Ratio: 1290 x 2796 px) -->
+                <div class="snap-start shrink-0 w-[300px] sm:w-[380px] lg:w-[440px] rounded-[2.5rem] bg-white border border-black/10 shadow-2xl overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-3 hover:shadow-brand-orange/20 group" onclick="openReviewZoom('assets/review_9.jpg')">
+                    
+                    <!-- Top Header Bar -->
+                    <div class="p-4 bg-white border-b border-black/5 flex items-center justify-between z-10 shrink-0">
+                        <span class="text-xs font-extrabold text-amber-500 uppercase tracking-widest flex items-center gap-1.5 font-outfit">
+                            <i class="fa-solid fa-star text-amber-400"></i> 5.0 RATING
+                        </span>
+                        <span class="text-xs font-extrabold text-brand-dark bg-black/5 px-3 py-1 rounded-full font-outfit">
+                            Card #9
+                        </span>
+                    </div>
+
+                    <!-- Native 1290x2796 iPhone 6.7" Aspect Ratio Container (aspect-[1290/2796]) -->
+                    <div class="w-full aspect-[1290/2796] relative bg-gray-50 overflow-hidden flex items-center justify-center">
+                        <img src="assets/review_9.jpg" alt="Review Online Food 9 (iPhone 6.7 inch 1290x2796)" class="w-full h-full object-cover z-10 relative transition-transform duration-300 group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        
+                        <!-- Fallback UI if image is not uploaded -->
+                        <div class="hidden absolute inset-0 flex-col items-center justify-center p-8 text-center bg-gray-900 text-white space-y-4 z-0 w-full">
+                            <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl shadow-sm">
+                                ⭐
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-center text-amber-400 text-sm gap-1">
+                                    ★★★★★
+                                </div>
+                                <h4 class="text-sm font-bold text-white font-outfit">Review Mockup #9</h4>
+                                <p class="text-xs text-gray-400 font-light">Resolusi Asli 6.7":<br><code class="text-brand-orange font-mono">1290 x 2796 px</code></p>
+                                <p class="text-[10px] text-gray-500 font-light">Upload ke:<br><code class="text-brand-orange font-mono">assets/review_9.jpg</code></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Review Card 10 (Exact iPhone 6.7" Native Ratio: 1290 x 2796 px) -->
+                <div class="snap-start shrink-0 w-[300px] sm:w-[380px] lg:w-[440px] rounded-[2.5rem] bg-white border border-black/10 shadow-2xl overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-3 hover:shadow-brand-orange/20 group" onclick="openReviewZoom('assets/review_10.jpg')">
+                    
+                    <!-- Top Header Bar -->
+                    <div class="p-4 bg-white border-b border-black/5 flex items-center justify-between z-10 shrink-0">
+                        <span class="text-xs font-extrabold text-amber-500 uppercase tracking-widest flex items-center gap-1.5 font-outfit">
+                            <i class="fa-solid fa-star text-amber-400"></i> 5.0 RATING
+                        </span>
+                        <span class="text-xs font-extrabold text-brand-dark bg-black/5 px-3 py-1 rounded-full font-outfit">
+                            Card #10
+                        </span>
+                    </div>
+
+                    <!-- Native 1290x2796 iPhone 6.7" Aspect Ratio Container (aspect-[1290/2796]) -->
+                    <div class="w-full aspect-[1290/2796] relative bg-gray-50 overflow-hidden flex items-center justify-center">
+                        <img src="assets/review_10.jpg" alt="Review Online Food 10 (iPhone 6.7 inch 1290x2796)" class="w-full h-full object-cover z-10 relative transition-transform duration-300 group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        
+                        <!-- Fallback UI if image is not uploaded -->
+                        <div class="hidden absolute inset-0 flex-col items-center justify-center p-8 text-center bg-gray-900 text-white space-y-4 z-0 w-full">
+                            <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl shadow-sm">
+                                ⭐
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-center text-amber-400 text-sm gap-1">
+                                    ★★★★★
+                                </div>
+                                <h4 class="text-sm font-bold text-white font-outfit">Review Mockup #10</h4>
+                                <p class="text-xs text-gray-400 font-light">Resolusi Asli 6.7":<br><code class="text-brand-orange font-mono">1290 x 2796 px</code></p>
+                                <p class="text-[10px] text-gray-500 font-light">Upload ke:<br><code class="text-brand-orange font-mono">assets/review_10.jpg</code></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SECTION 3: PAKET KEMITRAAN SPESIAL ==================== -->
+    <section class="py-20 bg-white border-b border-black/[0.03]">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-xs font-bold tracking-widest text-brand-orange uppercase block mb-2 font-outfit">03. Penawaran Spesial</span>
+                <h2 class="text-2xl sm:text-4xl font-black text-brand-dark font-outfit mb-4">
+                    Paket Kemitraan Spesial <span class="text-red-500">(Limited Offer!)</span>
+                </h2>
+                <p class="text-xs sm:text-sm text-gray-500 max-w-lg mx-auto font-light">
+                    Kami membuka peluang emas untuk Anda yang ingin memulai bisnis kuliner dengan modal terjangkau.
+                </p>
+            </div>
+
+            <!-- Main Promo Pricing Card -->
+            <div class="max-w-3xl mx-auto rounded-[2.5rem] bg-gradient-to-b from-brand-dark to-black text-white p-8 sm:p-12 shadow-2xl relative overflow-hidden border border-brand-orange/30">
+                
+                <div class="absolute -right-16 -top-16 w-56 h-56 rounded-full bg-brand-orange/20 blur-3xl pointer-events-none"></div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-6 border-b border-white/10 pb-8 mb-8 text-center sm:text-left">
+                    <div>
+                        <span class="bg-red-500/20 text-red-400 border border-red-500/30 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider block w-max mx-auto sm:mx-0 mb-3">
+                            🔥 PROMO KHUSUS 10 FRANCHISOR PERTAMA
+                        </span>
+                        <h3 class="text-2xl font-black font-outfit text-white">Lisensi Merek & Paket Full Support</h3>
+                    </div>
+                    <div class="text-center sm:text-right">
+                        <p class="text-xs text-gray-400 line-through">Harga Normal: Rp 15.000.000</p>
+                        <p class="text-3xl sm:text-4xl font-black text-brand-orange font-outfit mt-1">Rp 10.000.000</p>
+                    </div>
+                </div>
+
+                <h4 class="font-extrabold text-sm uppercase tracking-wider text-gray-300 mb-6 font-outfit">Fasilitas yang Didapatkan (Full Support):</h4>
+
+                <div class="space-y-4 text-xs text-gray-200 mb-10">
+                    <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/10">
+                        <i class="fa-solid fa-circle-check text-brand-orange text-base mt-0.5"></i>
+                        <div>
+                            <strong class="font-bold text-white block mb-0.5">Lisensi Merek Official NDOG!</strong>
+                            <span>Hak penggunaan nama dan logo NDOG! resmi untuk lokasi usaha Anda.</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/10">
+                        <i class="fa-solid fa-circle-check text-brand-orange text-base mt-0.5"></i>
+                        <div>
+                            <strong class="font-bold text-white block mb-0.5">Sistem & Aplikasi Kasir Kasio POS</strong>
+                            <span>Lisensi gratis aplikasi kasir cerdas Kasio POS di tahun pertama tanpa biaya bulanan.</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/10">
+                        <i class="fa-solid fa-circle-check text-brand-orange text-base mt-0.5"></i>
+                        <div>
+                            <strong class="font-bold text-white block mb-0.5">Pelatihan Komprehensif (Training)</strong>
+                            <span>Training memasak dan persiapan bahan (SOP Dapur) + Training penggunaan aplikasi Kasio POS & manajemen kasir.</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/10">
+                        <i class="fa-solid fa-circle-check text-brand-orange text-base mt-0.5"></i>
+                        <div>
+                            <strong class="font-bold text-white block mb-0.5">Dukungan Berkelanjutan (Marketing & Desain)</strong>
+                            <span>Support penuh dari tim pusat untuk konsultasi operasional dan materi desain promosi (banner, poster, konten media sosial).</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/10">
+                        <i class="fa-solid fa-circle-check text-brand-orange text-base mt-0.5"></i>
+                        <div>
+                            <strong class="font-bold text-white block mb-0.5">Listing di Website NDOG! Official</strong>
+                            <span>Outlet lokasi Anda akan resmi dicantumkan pada jaringan cabang di website official NDOG! lengkap dengan petunjuk arah Google Maps.</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/10">
+                        <i class="fa-solid fa-circle-check text-brand-orange text-base mt-0.5"></i>
+                        <div>
+                            <strong class="font-bold text-white block mb-0.5">Bahan Baku Standard Dapur Pusat (Rating Bintang 5)</strong>
+                            <span>Suplai bumbu inti dan bahan utama terpusat dari Surabaya dijamin rasa 100% sama persis dan sudah terbukti meraih rating Bintang 5 di online food.</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/10">
+                        <i class="fa-solid fa-circle-check text-brand-orange text-base mt-0.5"></i>
+                        <div>
+                            <strong class="font-bold text-white block mb-0.5">Bantuan Pendaftaran Merchant Online Food (GoFood / GrabFood / ShopeeFood)</strong>
+                            <span>Pendampingan setup & pendaftaran merchant online food agar outlet mitra langsung siap menerima orderan delivery sejak hari pertama Grand Opening.</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/10">
+                        <i class="fa-solid fa-circle-check text-brand-orange text-base mt-0.5"></i>
+                        <div>
+                            <strong class="font-bold text-white block mb-0.5">Starter Pack Branding Kit & Konten Media Sosial</strong>
+                            <span>Banner digital, poster promo opening, dan template postingan Instagram/TikTok siap pakai untuk mendukung promosi cabang baru.</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/10">
+                        <i class="fa-solid fa-circle-check text-brand-orange text-base mt-0.5"></i>
+                        <div>
+                            <strong class="font-bold text-white block mb-0.5">Paket Starter Kit Pembukaan 50 Porsi Pertama</strong>
+                            <span>Termasuk: 50 butir telur segar, 50 pcs packaging boks khas NDOG!, 50 pcs sendok higienis, 50 pcs kantong plastik HD, MMT Banner Spanduk Pembukaan Grand Opening, serta Bumbu & Sambal Bawang Pusat 50 porsi.</span>
+                        </div>
+                    </div>
+
+
+                    <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/10">
+                        <i class="fa-solid fa-circle-check text-brand-orange text-base mt-0.5"></i>
+                        <div>
+                            <strong class="font-bold text-white block mb-0.5">Legalitas Perjanjian Kerja Sama (PKS)</strong>
+                            <span>Draf Perjanjian Kerja Sama (PKS) yang jelas dan transparan untuk melindungi kedua belah pihak.</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Action Buttons: Lihat Draf PKS & Amankan Slot Promo -->
+                <div class="flex flex-col sm:flex-row items-center gap-4 w-full pt-2 no-print">
+                    <button onclick="openPksModal()" class="w-full sm:w-1/2 py-4 px-5 rounded-2xl bg-white/10 text-white border border-white/20 font-extrabold text-xs hover:bg-white/20 transition-all flex items-center justify-center gap-2 group shadow-md">
+                        <i class="fa-solid fa-file-contract text-brand-orange text-base group-hover:scale-110 transition-transform"></i>
+                        <span>Lihat Draf PKS Legalitas</span>
+                    </button>
+                    <a href="#form-pendaftaran" class="w-full sm:w-1/2 text-center bg-gradient-to-r from-brand-orange to-amber-500 text-white font-extrabold py-4 px-5 rounded-2xl text-xs uppercase tracking-wider hover:opacity-90 transition-opacity shadow-lg flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        <span>Amankan Slot Promo Rp 10jt</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+        <!-- ==================== SECTION 4: SIMULASI BALIK MODAL INTERAKTIF (BEP) ==================== -->
+    <section class="py-20 bg-[#FAFAFA] border-b border-black/[0.03]">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="text-xs font-bold tracking-widest text-brand-orange uppercase block mb-2 font-outfit">04. Proyeksi Keuangan Interaktif</span>
+                <h2 class="text-2xl sm:text-4xl font-black text-brand-dark font-outfit mb-4">
+                    Kalkulator Simulasi Balik Modal <span class="text-brand-orange">(ROI Calculator)</span>
+                </h2>
+                <p class="text-xs sm:text-sm text-gray-500 max-w-xl mx-auto font-light">
+                    Geser slider di bawah ini untuk melihat potensi keuntungan bersih dan kecepatan balik modal outlet Anda berdasarkan target penjualan harian.
+                </p>
+            </div>
+
+            <!-- Interactive Financial Card -->
+            <div class="max-w-4xl mx-auto bg-white rounded-[2.5rem] border border-black/10 shadow-2xl overflow-hidden print-border">
+                
+                <!-- Calculator Controller Header -->
+                <div class="p-6 sm:p-10 bg-gradient-to-b from-[#F5F5F7] to-white border-b border-black/5">
+                    
+                    <!-- Presets & Slider Section -->
+                    <div class="space-y-6">
+                        
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                            <div>
+                                <span class="text-[10px] font-extrabold text-brand-orange uppercase tracking-wider block font-outfit">Simulasi Penjualan</span>
+                                <h3 class="text-base sm:text-lg font-black text-brand-dark font-outfit">Berapa Target Penjualan Porsi Per Hari Anda?</h3>
+                            </div>
+                            
+                            <!-- Quick Preset Buttons -->
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <button type="button" onclick="setBepPreset(30)" class="bep-preset-btn px-3 py-1.5 rounded-xl border border-black/10 bg-white text-gray-600 font-bold text-xs hover:border-brand-orange hover:text-brand-orange transition-colors">
+                                    30 Porsi (Sepi)
+                                </button>
+                                <button type="button" onclick="setBepPreset(50)" class="bep-preset-btn px-3 py-1.5 rounded-xl border border-brand-orange bg-brand-orange text-white font-bold text-xs transition-colors shadow-sm">
+                                    50 Porsi (Standard)
+                                </button>
+                                <button type="button" onclick="setBepPreset(100)" class="bep-preset-btn px-3 py-1.5 rounded-xl border border-black/10 bg-white text-gray-600 font-bold text-xs hover:border-brand-orange hover:text-brand-orange transition-colors">
+                                    100 Porsi (Ramai)
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Slider Range Bar -->
+                        <div class="bg-white p-6 rounded-2xl border border-black/5 shadow-inner space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-400 font-bold">20 Porsi</span>
+                                <div class="text-center">
+                                    <span id="bep-portion-display" class="text-3xl sm:text-4xl font-black text-brand-orange font-outfit">50</span>
+                                    <span class="text-xs font-bold text-brand-dark font-outfit ml-1">Porsi / Hari</span>
+                                </div>
+                                <span class="text-xs text-gray-400 font-bold">150 Porsi</span>
+                            </div>
+
+                            <input type="range" id="bep-range-slider" min="20" max="150" step="5" value="50" oninput="updateBepCalculation(this.value)" class="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-orange">
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Financial Calculation Breakdown -->
+                <div class="divide-y divide-black/5 text-xs sm:text-sm">
+                    
+                    <div class="p-5 sm:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                        <div>
+                            <strong class="font-bold text-brand-dark block text-sm">Estimasi Penjualan Harian</strong>
+                            <span class="text-gray-400 text-xs">Porsi yang terjual dalam 1 hari</span>
+                        </div>
+                        <span id="bep-daily-qty" class="font-extrabold text-brand-dark text-base font-outfit">50 Porsi / hari</span>
+                    </div>
+
+                    <div class="p-5 sm:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                        <div>
+                            <strong class="font-bold text-brand-dark block text-sm">Estimasi Penjualan Bulanan (30 Hari)</strong>
+                            <span id="bep-monthly-formula" class="text-gray-400 text-xs">50 porsi x 30 hari</span>
+                        </div>
+                        <span id="bep-monthly-qty" class="font-extrabold text-brand-dark text-base font-outfit">1.500 Porsi / bulan</span>
+                    </div>
+
+                    <div class="p-5 sm:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 bg-emerald-50/60">
+                        <div>
+                            <strong class="font-bold text-brand-dark block text-sm">Omzet Kotor Bulanan</strong>
+                            <span class="text-gray-400 text-xs">Rata-rata harga jual Rp 15.000 / porsi</span>
+                        </div>
+                        <span id="bep-gross-revenue" class="font-black text-emerald-600 text-lg font-outfit">Rp 22.500.000</span>
+                    </div>
+
+                    <div class="p-5 sm:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                        <div>
+                            <strong class="font-bold text-brand-dark block text-sm">HPP & Bahan Baku (Suplai Pusat)</strong>
+                            <span class="text-gray-400 text-xs">Biaya modal telur, nasi, bumbu & packaging (~Rp 7.000/porsi)</span>
+                        </div>
+                        <span id="bep-cogs" class="font-bold text-red-500 text-base font-outfit">- Rp 10.500.000</span>
+                    </div>
+
+                    <div class="p-5 sm:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                        <div>
+                            <strong class="font-bold text-brand-dark block text-sm">Biaya Operasional Bulanan</strong>
+                            <span class="text-gray-400 text-xs">Estimasi gaji staf, listrik, dan sewa tempat</span>
+                        </div>
+                        <span id="bep-opex" class="font-bold text-red-500 text-base font-outfit">- Rp 4.500.000</span>
+                    </div>
+
+                    <!-- Final Profit & ROI Footer Banner -->
+                    <div class="p-6 sm:p-8 bg-brand-dark text-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+                        <div>
+                            <span class="text-brand-orange text-[10px] font-extrabold uppercase tracking-widest block font-outfit">Hasil Akhir Profit Bulanan</span>
+                            <strong class="font-black text-xl sm:text-2xl font-outfit">Laba Bersih Per Bulan</strong>
+                        </div>
+                        <div class="text-left sm:text-right">
+                            <span id="bep-net-profit" class="text-3xl sm:text-4xl font-black text-brand-orange font-outfit block">Rp 7.500.000</span>
+                            <div class="mt-1 flex items-center justify-start sm:justify-end gap-2">
+                                <span class="text-xs text-gray-300">Estimasi Balik Modal (ROI):</span>
+                                <span id="bep-roi-badge" class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-black px-3 py-1 rounded-full font-outfit">
+                                    &lt; 1.4 Bulan! 🚀
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Note Disclaimer -->
+            <p class="text-center text-[11px] text-gray-400 mt-6 font-light">
+                *Simulasi menggunakan asumsi harga paket promo Rp 10.000.000, operasional Rp 4.5jt/bulan, dan HPP Rp 7.000/porsi. Hasil riil bergantung pada jam operasional & lokasi cabang mitra.
+            </p>
+        </div>
+    </section>
+
+    <!-- ==================== SECTION 5: CARA BERGABUNG ==================== -->
+    <section class="py-20 bg-white border-b border-black/[0.03]">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-xs font-bold tracking-widest text-brand-orange uppercase block mb-2 font-outfit">05. Alur Kemitraan</span>
+                <h2 class="text-2xl sm:text-4xl font-black text-brand-dark font-outfit mb-4">
+                    Cara Bergabung Menjadi Mitra <span class="text-brand-orange">NDOG!</span>
+                </h2>
+                <p class="text-xs sm:text-sm text-gray-500 max-w-md mx-auto font-light">
+                    Langkah Anda menuju kesuksesan bisnis kuliner sangat mudah dan transparan.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 max-w-5xl mx-auto">
+                <div class="p-6 rounded-3xl bg-[#F5F5F7] border border-black/5 text-center shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-full bg-brand-orange text-white font-black text-sm flex items-center justify-center mx-auto mb-4 font-outfit shadow-md">1</div>
+                        <h4 class="font-bold text-brand-dark text-xs font-outfit mb-2">Konsultasi & Form</h4>
+                        <p class="text-[11px] text-gray-500 leading-relaxed font-light">Hubungi tim kami dan isi data diri serta rencana lokasi.</p>
+                    </div>
+                </div>
+
+                <div class="p-6 rounded-3xl bg-[#F5F5F7] border border-black/5 text-center shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-full bg-brand-orange text-white font-black text-sm flex items-center justify-center mx-auto mb-4 font-outfit shadow-md">2</div>
+                        <h4 class="font-bold text-brand-dark text-xs font-outfit mb-2">Pembayaran DP</h4>
+                        <p class="text-[11px] text-gray-500 leading-relaxed font-light">Tanda jadi untuk mengamankan kuota promo 10 pendaftar pertama.</p>
+                    </div>
+                </div>
+
+                <div class="p-6 rounded-3xl bg-[#F5F5F7] border border-black/5 text-center shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-full bg-brand-orange text-white font-black text-sm flex items-center justify-center mx-auto mb-4 font-outfit shadow-md">3</div>
+                        <h4 class="font-bold text-brand-dark text-xs font-outfit mb-2">Tanda Tangan PKS</h4>
+                        <button onclick="openPksModal()" class="text-[10px] text-brand-orange font-bold underline block mx-auto mt-1 hover:opacity-80">Lihat Draf PKS</button>
+                        <p class="text-[11px] text-gray-500 leading-relaxed font-light">Penandatanganan kontrak kerja sama resmi yang legal.</p>
+                    </div>
+                </div>
+
+                <div class="p-6 rounded-3xl bg-[#F5F5F7] border border-black/5 text-center shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-full bg-brand-orange text-white font-black text-sm flex items-center justify-center mx-auto mb-4 font-outfit shadow-md">4</div>
+                        <h4 class="font-bold text-brand-dark text-xs font-outfit mb-2">Pelatihan & Setup</h4>
+                        <p class="text-[11px] text-gray-500 leading-relaxed font-light">Tim mitra mengikuti training masak SOP & Kasio POS.</p>
+                    </div>
+                </div>
+
+                <div class="p-6 rounded-3xl bg-brand-orange text-white text-center shadow-md flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-full bg-white text-brand-orange font-black text-sm flex items-center justify-center mx-auto mb-4 font-outfit shadow-sm">5</div>
+                        <h4 class="font-bold text-white text-xs font-outfit mb-2">Grand Opening!</h4>
+                        <p class="text-[11px] text-white/90 leading-relaxed font-light">Cabang NDOG! Anda siap beroperasi dan menghasilkan cuan!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FORM PENDAFTARAN & WA CTA ==================== -->
+    <section id="form-pendaftaran" class="py-20 bg-gradient-to-b from-[#FAFAFA] to-[#F5F5F7] relative no-print">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="p-8 sm:p-12 rounded-[2.5rem] bg-white border border-black/5 shadow-2xl text-center relative">
+                
+                <span class="text-xs font-bold tracking-widest text-brand-orange uppercase block mb-2 font-outfit">Formulir Pendaftaran Slot Promo</span>
+                <h2 class="text-2xl sm:text-4xl font-black text-brand-dark mb-3 font-outfit">Amankan Slot Promo Rp 10 Juta!</h2>
+                <p class="text-xs sm:text-sm text-gray-500 max-w-md mx-auto mb-8 font-light">
+                    Kuota promo terbatas hanya untuk 10 pendaftar pertama. Isi formulir singkat di bawah untuk terhubung langsung dengan Tim Kemitraan Pusat via WhatsApp.
+                </p>
+
+                <div class="space-y-4 text-left max-w-md mx-auto mb-8">
+                    <div>
+                        <label for="reg-name" class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-1">Nama Lengkap</label>
+                        <input type="text" id="reg-name" placeholder="Contoh: Budi Santoso" class="w-full bg-[#F5F5F7] border border-black/5 text-brand-dark rounded-xl px-4 py-3.5 text-xs focus:outline-none focus:border-brand-orange transition-all">
+                    </div>
+
+                    <div>
+                        <label for="reg-city" class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-1">Kota Rencana Outlet</label>
+                        <input type="text" id="reg-city" placeholder="Contoh: Surabaya / Malang / Jakarta" class="w-full bg-[#F5F5F7] border border-black/5 text-brand-dark rounded-xl px-4 py-3.5 text-xs focus:outline-none focus:border-brand-orange transition-all">
+                    </div>
+
+                    <div>
+                        <label for="reg-package" class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-1">Pilihan Paket Kemitraan</label>
+                        <select id="reg-package" class="w-full bg-[#F5F5F7] border border-black/5 text-brand-dark rounded-xl px-4 py-3.5 text-xs focus:outline-none focus:border-brand-orange transition-all">
+                            <option value="Paket Promo Spesial Lisensi Merek (Rp 10 Juta)">Paket Promo Spesial Lisensi Merek (Rp 10.000.000)</option>
+                            <option value="Konsultasi Dulu">Konsultasi Dulu Saja</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button onclick="submitRegistrationWA()" class="w-full max-w-md bg-gradient-to-r from-brand-orange to-amber-500 text-white font-extrabold py-4 rounded-2xl text-xs uppercase tracking-wider hover:opacity-90 transition-opacity shadow-lg flex items-center justify-center gap-2 mx-auto">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Hubungi Tim Kemitraan via WhatsApp
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+    
+            </div>
+
+            <!-- Modal Footer Action Bar -->
+            <div id="pks-modal-footer" class="p-6 bg-[#F5F5F7] border-t border-black/10 flex flex-col sm:flex-row items-center justify-between gap-4 shrink-0 no-print">
+                <button onclick="window.print()" class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-white border border-black/10 text-xs font-bold text-brand-dark hover:bg-gray-100 transition-colors flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-print"></i> Cetak / Unduh Draf PKS (PDF)
+                </button>
+
+                <div class="flex items-center gap-3 w-full sm:w-auto">
+                    <button onclick="closePksModal()" class="px-5 py-3 rounded-2xl border border-black/10 text-xs font-bold text-gray-500 hover:text-brand-dark transition-colors">
+                        Tutup
+                    </button>
+                    <a href="#form-pendaftaran" onclick="closePksModal()" class="flex-1 sm:flex-none bg-gradient-to-r from-brand-orange to-amber-500 text-white font-extrabold text-xs px-6 py-3 rounded-2xl uppercase tracking-wider shadow-md hover:opacity-90 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp"></i> Amankan Slot Promo Rp 10jt
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- ==================== REVIEW ZOOM LIGHTBOX MODAL ==================== -->
+    <div id="review-zoom-modal" class="fixed inset-0 z-[110] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-8 hidden opacity-0 transition-opacity duration-300 no-print" onclick="closeReviewZoom()">
+        <div class="relative max-w-4xl max-h-[90vh] flex flex-col items-center justify-center" onclick="event.stopPropagation()">
+            <!-- Close Button -->
+            <button onclick="closeReviewZoom()" class="absolute -top-12 right-0 w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- Zoomed Image Container -->
+            <img id="review-zoom-img" src="" alt="Review Full Detail" class="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl border border-white/10">
+            <p class="text-xs text-gray-300 font-outfit mt-3">Klik di luar gambar atau tombol X untuk menutup</p>
+        </div>
+    </div>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-[#F5F5F7] py-12 border-t border-black/[0.04] text-center no-print">
+        <div class="max-w-5xl mx-auto px-6">
+            <a href="index.html" class="inline-flex items-center gap-2 text-xl font-extrabold text-brand-dark font-outfit mb-4">
+                <div class="w-8 h-8 rounded-xl overflow-hidden border border-black/5 shadow-sm bg-white p-0.5 flex items-center justify-center">
+                    <img src="assets/logo.png" alt="NDOG! Logo" class="w-full h-full object-contain">
+                </div>
+                <span>NDOG! <span class="text-brand-orange">Franchise.</span></span>
+            </a>
+            <p class="text-gray-400 text-xs max-w-xs mx-auto mb-6 font-light">
+                Kemitraan Resmi Kuliner Nasi Telur Sambal Bawang Pelopor Surabaya.
+            </p>
+            <p class="text-gray-400 text-[11px]">
+                &copy; 2026 NDOG! Ubaya. All rights reserved.
+            </p>
+        </div>
+    </footer>
+</div><!-- End #landing-page-wrapper -->
+
+<!-- ==================== DRAF PKS AGREEMENT MODAL ==================== -->
+    <div id="pks-modal" class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-[2.5rem] max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden border border-black/10">
+            
+            <!-- Modal Header -->
+            <div id="pks-modal-header" class="p-6 sm:p-8 bg-[#F5F5F7] border-b border-black/10 flex justify-between items-center shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-brand-orange/10 text-brand-orange text-lg flex items-center justify-center font-bold font-outfit">
+                        📜
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-extrabold text-brand-orange uppercase tracking-widest block font-outfit">Dokumen Legalitas Resmi</span>
+                        <h3 class="text-lg sm:text-xl font-black text-brand-dark font-outfit">Draf Perjanjian Kerja Sama (PKS) Franchise NDOG!</h3>
+                    </div>
+                </div>
+                <button id="pks-modal-close-btn" onclick="closePksModal()" class="w-10 h-10 rounded-full bg-black/5 hover:bg-black/10 text-gray-500 hover:text-brand-dark flex items-center justify-center transition-colors no-print">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content (Scrollable PKS Document Body) -->
+            <div id="pks-modal-content" class="p-6 sm:p-10 overflow-y-auto space-y-8 text-xs sm:text-sm text-gray-700 leading-relaxed font-light">
+                
+                <!-- Title & Header Info -->
+                <div class="text-center pb-6 border-b border-black/10">
+                    <h2 class="text-base sm:text-lg font-black text-brand-dark font-outfit uppercase tracking-wide">SURAT PERJANJIAN KERJA SAMA KEMITRAAN (FRANCHISE)</h2>
+                    <p class="text-xs text-brand-orange font-bold font-outfit mt-1">MEREK KULINER NDOG! OFFICIAL</p>
+                    <p class="text-[11px] text-gray-400 mt-2">Draf Perjanjian Standar Lisensi Merek & Sistem Operasional Waralaba</p>
+                </div>
+
+                <!-- Parties Intro -->
+                <div class="space-y-3 bg-[#F5F5F7] p-5 rounded-2xl border border-black/5">
+                    <p><strong class="font-bold text-brand-dark">PIHAK KESATU (Pusat / Pemilik Merek):</strong> Manajemen Pusat NDOG! Official Surabaya, bertindak sebagai pemilik sah lisensi merek, SOP operasional, dan suplai bumbu terpusat.</p>
+                    <p><strong class="font-bold text-brand-dark">PIHAK KEDUA (Mitra / Franchisor):</strong> Pendaftar yang telah mengisi formulir pendaftaran kemitraan resmi dan melunasi biaya lisensi promo untuk pengoperasian cabang outlet.</p>
+                </div>
+
+                <!-- 10 Legal Clauses -->
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-brand-dark text-sm font-outfit mb-1.5 text-brand-orange">PASAL 1: MAKSUD DAN TUJUAN KERJASAMA</h4>
+                        <p>PIHAK KESATU memberikan izin lisensi non-eksklusif penggunaan merek dagang "NDOG!", logo, konsep waralaba, dan SOP operasional kepada PIHAK KEDUA untuk mengoperasikan 1 (satu) cabang outlet di lokasi yang telah disepakati bersama.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-brand-dark text-sm font-outfit mb-1.5 text-brand-orange">PASAL 2: MASA BERLAKU PERJANJIAN</h4>
+                        <p>Perjanjian kerja sama ini berlaku selama 3 (tiga) tahun terhitung sejak tanggal penandatanganan akad. Setelah 3 tahun, perjanjian dapat diperpanjang kembali tanpa dikenakan biaya lisensi merek ulang (bebas biaya royalti perpanjangan).</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-brand-dark text-sm font-outfit mb-1.5 text-brand-orange">PASAL 3: HAK DAN KEWAJIBAN PIHAK KESATU (PUSAT)</h4>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li>Memberikan lisensi penggunaan nama merek dan logo resmi NDOG!.</li>
+                            <li>Memberikan pelatihan (training) SOP memasak dapur dan operasional kasir Kasio POS.</li>
+                            <li>Menjamin suplai bumbu inti dan bahan utama terstandar dari Dapur Pusat Surabaya demi menjaga konsistensi cita rasa bintang 5.</li>
+                            <li>Pencantuman lokasi outlet PIHAK KEDUA pada website official NDOG! lengkap dengan integrasi Google Maps.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-brand-dark text-sm font-outfit mb-1.5 text-brand-orange">PASAL 4: HAK DAN KEWAJIBAN PIHAK KEDUA (MITRA)</h4>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li>Menjaga kerahasiaan resep rahasia, SOP operasional, dan materi branding NDOG!.</li>
+                            <li>Membeli bumbu inti dan bahan baku terstandar secara eksklusif dari Dapur Pusat PIHAK KESATU.</li>
+                            <li>Menjaga kebersihan area outlet, kebersihan hidangan, serta standar pelayanan demi menjaga nama baik brand NDOG!.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-brand-dark text-sm font-outfit mb-1.5 text-brand-orange">PASAL 5: BIAYA LISENSI PROMO & SISTEM PEMBAYARAN</h4>
+                        <p>Biaya Lisensi Kemitraan Promo Spesial disepakati sebesar <strong>Rp 10.000.000,- (sepuluh juta rupiah)</strong>. Pembayaran dilakukan dengan sistem Down Payment (DP) tanda jadi sebesar 50% untuk mengamankan kuota promo, dan pelunasan 50% dilakukan sebelum pengiriman Starter Kit & jadwal training.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-brand-dark text-sm font-outfit mb-1.5 text-brand-orange">PASAL 6: KETENTUAN TANPA ROYALTY FEE (100% PROFIT MITRA)</h4>
+                        <p>PIHAK KESATU <strong>tidak mengenakan Royalty Fee bulanan</strong> atau potongan persen omset harian. 100% laba bersih operasional cabang sepenuhnya menjadi hak milik PIHAK KEDUA.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-brand-dark text-sm font-outfit mb-1.5 text-brand-orange">PASAL 7: LISENSI SISTEM KASIR KASIO POS</h4>
+                        <p>PIHAK KEDUA berhak mendapatkan akses lisensi gratis aplikasi kasir cerdas Kasio POS di tahun pertama untuk pencatatan transaksi harian, laporan laba rugi real-time, dan manajemen stok bahan.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-brand-dark text-sm font-outfit mb-1.5 text-brand-orange">PASAL 8: KERAHASIAAN INFORMASI & LARANGAN MENIRU (NON-KOMPETING)</h4>
+                        <p>PIHAK KEDUA dilarang memberikan, menjual, atau membocorkan resep/SOP NDOG! kepada pihak ketiga mana pun, serta dilarang membuka bisnis kuliner sejenis yang meniru secara persis konsep NDOG! selama masa perjanjian berlangsung.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-brand-dark text-sm font-outfit mb-1.5 text-brand-orange">PASAL 9: KEADAAN MEMAKSA (FORCE MAJEURE)</h4>
+                        <p>Apabila terjadi bencana alam, perang, huru-hara, atau kebijakan pemerintah pusat/daerah yang secara langsung menghentikan operasional, kedua pihak sepakat menyelesaikan secara kekeluargaan dan musyawarah.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-brand-dark text-sm font-outfit mb-1.5 text-brand-orange">PASAL 10: PENYELESAIAN PERSELISIHAN</h4>
+                        <p>Segala perselisihan yang timbul dari perjanjian ini akan diselesaikan secara musyawarah mufakat. Apabila musyawarah tidak mencapai kesepakatan, kedua pihak sepakat menyelesaikannya sesuai ketentuan hukum positif yang berlaku di Republik Indonesia.</p>
+                    </div>
+
+                    <!-- Blok Tanda Tangan Resmi (Terlihat di Modal & Cetak PDF) -->
+                    <div class="pks-signature-block pt-8 mt-8 border-t border-black/10 grid grid-cols-2 gap-8 text-center font-outfit">
+                        <div class="flex flex-col items-center">
+                            <p class="font-extrabold text-brand-dark text-xs uppercase tracking-wider mb-1">PIHAK KESATU (PUSAT)</p>
+                            <p class="text-[11px] text-gray-500 mb-14">Manajemen NDOG! Official Surabaya</p>
+                            <div class="w-40 border-b border-black/40 mb-1"></div>
+                            <p class="text-xs font-bold text-brand-dark">( Tim Manajemen Pusat )</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <p class="font-extrabold text-brand-dark text-xs uppercase tracking-wider mb-1">PIHAK KEDUA (MITRA)</p>
+                            <p class="text-[11px] text-gray-500 mb-14">Calon Mitra Franchise Cabang</p>
+                            <div class="w-40 border-b border-black/40 mb-1"></div>
+                            <p class="text-xs font-bold text-brand-dark">( Nama Lengkap & TTD Mitra )</p>
+                        </div>
+                    </div>
+                </div>
+
+    <!-- JavaScript -->
+    <script>
+        function submitRegistrationWA() {
+            const nameInput = document.getElementById('reg-name');
+            const cityInput = document.getElementById('reg-city');
+            const pkgInput = document.getElementById('reg-package');
+
+            const name = nameInput ? nameInput.value.trim() : '';
+            const city = cityInput ? cityInput.value.trim() : '';
+            const pkg = pkgInput ? pkgInput.value : '';
+
+            if (!name || !city) {
+                alert("Silakan lengkapi Nama Lengkap dan Kota Rencana Outlet Anda terlebih dahulu.");
+                return;
+            }
+
+            const message = `*Halo Tim Kemitraan NDOG! Pusat!* 🚀\nSaya berminat amankan *Slot Promo Rp 10 Juta* Kemitraan Franchise NDOG!:\n\n- *Nama:* ${name}\n- *Kota Rencana Outlet:* ${city}\n- *Paket:* ${pkg}\n\nMohon info ketersediaan wilayah dan langkah selanjutnya. Terima kasih!`;
+
+            const waUrl = `https://wa.me/6285134252310?text=${encodeURIComponent(message)}`;
+            window.open(waUrl, '_blank');
+        }
+
+        function openPksModal() {
+            const modal = document.getElementById('pks-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                }, 50);
+            }
+        }
+
+        function closePksModal() {
+            const modal = document.getElementById('pks-modal');
+            if (modal) {
+                modal.classList.add('opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+
+        // BEP Interactive Calculator Logic
+        function updateBepCalculation(portionValue) {
+            const portions = parseInt(portionValue) || 50;
+            const pricePerPortion = 15000;
+            const cogsPerPortion = 7000;
+            const monthlyOpex = 4500000;
+            const investmentCost = 10000000;
+            const daysInMonth = 30;
+
+            const monthlyPortions = portions * daysInMonth;
+            const grossRevenue = monthlyPortions * pricePerPortion;
+            const totalCogs = monthlyPortions * cogsPerPortion;
+            const netProfit = grossRevenue - totalCogs - monthlyOpex;
+
+            // Format numbers to IDR string
+            const formatRp = (num) => 'Rp ' + num.toLocaleString('id-ID');
+
+            // Update DOM displays
+            const portionDisplay = document.getElementById('bep-portion-display');
+            const dailyQty = document.getElementById('bep-daily-qty');
+            const monthlyQty = document.getElementById('bep-monthly-qty');
+            const monthlyFormula = document.getElementById('bep-monthly-formula');
+            const grossRevenueEl = document.getElementById('bep-gross-revenue');
+            const cogsEl = document.getElementById('bep-cogs');
+            const netProfitEl = document.getElementById('bep-net-profit');
+            const roiBadge = document.getElementById('bep-roi-badge');
+
+            if (portionDisplay) portionDisplay.textContent = portions;
+            if (dailyQty) dailyQty.textContent = portions + ' Porsi / hari';
+            if (monthlyQty) monthlyQty.textContent = monthlyPortions.toLocaleString('id-ID') + ' Porsi / bulan';
+            if (monthlyFormula) monthlyFormula.textContent = portions + ' porsi x 30 hari';
+            if (grossRevenueEl) grossRevenueEl.textContent = formatRp(grossRevenue);
+            if (cogsEl) cogsEl.textContent = '- ' + formatRp(totalCogs);
+
+            if (netProfitEl) {
+                if (netProfit > 0) {
+                    netProfitEl.textContent = formatRp(netProfit);
+                    netProfitEl.className = 'text-3xl sm:text-4xl font-black text-brand-orange font-outfit block';
+                } else {
+                    netProfitEl.textContent = formatRp(netProfit);
+                    netProfitEl.className = 'text-3xl sm:text-4xl font-black text-red-400 font-outfit block';
+                }
+            }
+
+            if (roiBadge) {
+                if (netProfit > 0) {
+                    const months = (investmentCost / netProfit).toFixed(1);
+                    roiBadge.textContent = `< ${months} Bulan! 🚀`;
+                    roiBadge.className = 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-black px-3 py-1 rounded-full font-outfit';
+                } else {
+                    roiBadge.textContent = 'Perlu Peningkatan Sales';
+                    roiBadge.className = 'bg-red-500/20 text-red-400 border border-red-500/30 text-xs font-black px-3 py-1 rounded-full font-outfit';
+                }
+            }
+        }
+
+        function setBepPreset(portions) {
+            const slider = document.getElementById('bep-range-slider');
+            if (slider) {
+                slider.value = portions;
+                updateBepCalculation(portions);
+            }
+
+            // Update active preset button styling
+            const buttons = document.querySelectorAll('.bep-preset-btn');
+            buttons.forEach(btn => {
+                btn.className = 'bep-preset-btn px-3 py-1.5 rounded-xl border border-black/10 bg-white text-gray-600 font-bold text-xs hover:border-brand-orange hover:text-brand-orange transition-colors';
+            });
+
+            // Highlight clicked button
+            if (event && event.target) {
+                event.target.className = 'bep-preset-btn px-3 py-1.5 rounded-xl border border-brand-orange bg-brand-orange text-white font-bold text-xs transition-colors shadow-sm';
+            }
+        }
+
+
+        // Online Food Review Slider Scroll Function
+        function scrollReviewSlider(direction) {
+            const container = document.getElementById('review-slider-container');
+            if (container) {
+                const scrollAmount = 500;
+                if (direction === 'left') {
+                    container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                } else {
+                    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                }
+            }
+        }
+
+
+        // Review Zoom Lightbox Functions
+        function openReviewZoom(imgSrc) {
+            const modal = document.getElementById('review-zoom-modal');
+            const img = document.getElementById('review-zoom-img');
+            if (modal && img) {
+                img.src = imgSrc;
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                }, 50);
+            }
+        }
+
+        function closeReviewZoom() {
+            const modal = document.getElementById('review-zoom-modal');
+            if (modal) {
+                modal.classList.add('opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+    </script>
+</body>
+</html>
