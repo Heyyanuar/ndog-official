@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Karakter Tim NDOG! – Personality Assessment</title>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            orange: '#FF6B00',
+                            orangeLight: '#FFB800',
+                            dark: '#18181B',
+                            zinc: '#F4F4F5'
+                        }
+                    },
+                    fontFamily: {
+                        outfit: ['Outfit', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-[#F8F9FA] text-brand-dark font-sans antialiased min-h-screen flex flex-col selection:bg-brand-orange selection:text-white">
+
+    <!-- Top Bar -->
+    <header class="bg-white border-b border-black/5 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl overflow-hidden border border-black/5 p-0.5 bg-white shadow-sm flex items-center justify-center">
+                    <img src="assets/logo.png" alt="NDOG! Logo" class="w-full h-full object-contain">
+                </div>
+                <div>
+                    <h1 class="text-sm font-black font-outfit uppercase tracking-wider text-brand-dark">NDOG! Official</h1>
+                    <p class="text-[11px] text-gray-500 font-medium">Team Personality Assessment (DISC)</p>
+                </div>
+            </div>
+            <div class="text-xs font-bold text-brand-orange bg-orange-50 px-3 py-1.5 rounded-full border border-orange-200 font-outfit">
+                Staff Gathering 2026
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-4xl mx-auto px-6 py-10 w-full">
+        
+        <!-- INTRO SCREEN -->
+        <div id="intro-card" class="bg-white rounded-3xl p-8 md:p-12 border border-black/5 shadow-xl">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100/70 border border-brand-orange/20 mb-6">
+                <span class="w-2 h-2 rounded-full bg-brand-orange animate-ping"></span>
+                <span class="text-[11px] font-black tracking-wider text-brand-orange uppercase font-outfit">Mengenal Gaya Kerja & Karakter Diri</span>
+            </div>
+            
+            <h2 class="text-3xl md:text-5xl font-black font-outfit text-brand-dark mb-4 tracking-tight leading-tight">
+                Kuis Karakter Tim: <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-amber-500">Siapakah Dirimu di NDOG!?</span>
+            </h2>
+            
+            <p class="text-gray-600 text-sm md:text-base leading-relaxed mb-6">
+                Halo Rek! Kuis ini bertujuan untuk memetakan kekuatan unik, gaya komunikasi, dan peran terbaik kamu di tim NDOG!. 
+                <strong>Tidak ada jawaban benar atau salah</strong>. Jawablah secara spontan dan jujur sesuai dengan apa yang paling menggambarkan dirimu dalam situasi kerja sehari-hari.
+            </p>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+                <div class="bg-red-50/60 border border-red-200/60 rounded-2xl p-3 text-center">
+                    <span class="text-lg font-black text-red-600 font-outfit block">Tipe D</span>
+                    <span class="text-[11px] text-gray-600 font-bold">Komandan Shift</span>
+                </div>
+                <div class="bg-amber-50/60 border border-amber-200/60 rounded-2xl p-3 text-center">
+                    <span class="text-lg font-black text-amber-600 font-outfit block">Tipe I</span>
+                    <span class="text-[11px] text-gray-600 font-bold">Duta Pelayanan</span>
+                </div>
+                <div class="bg-green-50/60 border border-green-200/60 rounded-2xl p-3 text-center">
+                    <span class="text-lg font-black text-green-600 font-outfit block">Tipe S</span>
+                    <span class="text-[11px] text-gray-600 font-bold">Penjaga Dapur</span>
+                </div>
+                <div class="bg-blue-50/60 border border-blue-200/60 rounded-2xl p-3 text-center">
+                    <span class="text-lg font-black text-blue-600 font-outfit block">Tipe C</span>
+                    <span class="text-[11px] text-gray-600 font-bold">Penjaga SOP</span>
+                </div>
+            </div>
+
+            <!-- Identitas Form -->
+            <form id="start-form" onsubmit="startQuiz(event)" class="space-y-4 pt-4 border-t border-black/5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-wider text-gray-700 mb-2 font-outfit">
+                            Nama Lengkap / Panggilan <span class="text-brand-orange">*</span>
+                        </label>
+                        <input type="text" id="staff-name" required placeholder="Contoh: Budi Santoso / Mas Budi" class="w-full px-5 py-3.5 rounded-2xl bg-[#F8F9FA] border border-black/10 text-sm focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-wider text-gray-700 mb-2 font-outfit">
+                            Email Aktif <span class="text-brand-orange">*</span>
+                        </label>
+                        <input type="email" id="staff-email" required placeholder="Contoh: budi@gmail.com" class="w-full px-5 py-3.5 rounded-2xl bg-[#F8F9FA] border border-black/10 text-sm focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-all">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-wider text-gray-700 mb-2 font-outfit">
+                            Posisi / Tugas di NDOG! <span class="text-brand-orange">*</span>
+                        </label>
+                        <select id="staff-role" required class="w-full px-5 py-3.5 rounded-2xl bg-[#F8F9FA] border border-black/10 text-sm focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-all">
+                            <option value="Kitchen Crew / Dapur">Kitchen Crew (Dapur & Goreng)</option>
+                            <option value="Kasir & Barista / Frontliner">Kasir / Frontliner / Minuman</option>
+                            <option value="Leader / PIC Shift">Leader Shift / PIC Outlet</option>
+                            <option value="Staff All-Rounder">Staff All-Rounder / Operasional</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-wider text-gray-700 mb-2 font-outfit">
+                            Lama Bergabung di NDOG!
+                        </label>
+                        <select id="staff-tenure" class="w-full px-5 py-3.5 rounded-2xl bg-[#F8F9FA] border border-black/10 text-sm focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-all">
+                            <option value="Kurang dari 3 bulan">< 3 Bulan</option>
+                            <option value="3 - 6 bulan">3 - 6 Bulan</option>
+                            <option value="6 - 12 bulan">6 - 12 Bulan</option>
+                            <option value="Lebih dari 1 tahun">> 1 Tahun</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-gradient-to-r from-brand-orange to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-black py-4 px-8 rounded-2xl uppercase tracking-wider text-sm transition-all shadow-lg shadow-brand-orange/30 flex items-center justify-center gap-2">
+                        <span>Mulai Kuis Sekarang (50 Soal)</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <p class="text-[11px] text-gray-400 text-center mt-3">Estimasi waktu pengerjaan: 10 - 15 menit.</p>
+                </div>
+            </form>
+        </div>
+
+        <!-- QUIZ CONTAINER SCREEN (HIDDEN INITIALLY) -->
+        <div id="quiz-card" class="hidden space-y-6">
+            
+            <!-- Sticky Progress Bar Header -->
+            <div class="bg-white rounded-2xl p-5 border border-black/5 shadow-sm sticky top-20 z-30 flex flex-col gap-2">
+                <div class="flex justify-between items-center text-xs font-bold font-outfit">
+                    <span id="progress-text" class="text-brand-orange">Soal Terjawab: 0 / 50</span>
+                    <span id="progress-percent" class="text-gray-400">0% Selesai</span>
+                </div>
+                <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="bg-gradient-to-r from-brand-orange to-amber-500 h-full w-0 transition-all duration-300 rounded-full"></div>
+                </div>
+            </div>
+
+            <!-- List of Questions Form -->
+            <form id="questions-form" onsubmit="calculateResults(event)" class="space-y-6">
+                <div id="questions-container" class="space-y-6">
+                    <!-- Injected by JavaScript -->
+                </div>
+
+                <!-- Submit Button -->
+                <div class="bg-white rounded-3xl p-6 border border-black/5 shadow-md flex flex-col items-center text-center">
+                    <p class="text-xs text-gray-500 mb-4 font-medium">Pastikan semua 50 pertanyaan telah terpilih sebelum mengirimkan hasil kuis.</p>
+                    <button type="submit" id="btn-submit-quiz" class="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-brand-orange to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-black rounded-2xl uppercase tracking-wider text-xs md:text-sm shadow-xl shadow-brand-orange/30 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-circle-check text-base"></i>
+                        <span>Lihat Hasil & Tipe Kepribadian Saya</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- RESULT CONTAINER SCREEN (HIDDEN INITIALLY) -->
+        <div id="result-card" class="hidden bg-white rounded-3xl p-8 md:p-12 border border-black/5 shadow-2xl">
+            <!-- Dynamically injected by JavaScript -->
+        </div>
+
+    </main>
+
+    <footer class="bg-white border-t border-black/5 py-6 text-center text-xs text-gray-400">
+        &copy; 2026 NDOG! Official Surabaya – Staff Gathering & Coaching Tool
+    </footer>
+
+    <!-- SCRIPT LOGIC -->
+    <script>
+        const questionsData = [
+            {
+                q: "Saat jam makan siang antrean pesanan mendadak membludak, saya cenderung...",
+                options: [
+                    { type: "D", text: "Langsung mengambil alih, memberi komando cepat ke teman-teman agar pesanan lekas kelar." },
+                    { type: "I", text: "Tetap senyum ceria, menyapa pelanggan dengan ramah sambil memberi semangat ke tim." },
+                    { type: "S", text: "Tetap tenang, tidak panik, dan fokus menyelesaikan pesanan bagian saya satu per satu." },
+                    { type: "C", text: "Memastikan semua pesanan sesuai nota, tidak ada bumbu atau item yang tertinggal sedikit pun." }
+                ]
+            },
+            {
+                q: "Dalam bekerja di outlet, hal yang paling membuat saya puas adalah...",
+                options: [
+                    { type: "D", text: "Target porsi dan penjualan hari ini tembus rekor dengan cepat." },
+                    { type: "I", text: "Suasana kerja ramai tawa, seru, dan pelanggan merasa terhibur." },
+                    { type: "S", text: "Semua berjalan damai, tim saling tolong tanpa ada konflik atau adu mulut." },
+                    { type: "C", text: "Semua standar takaran resep, kebersihan, dan closing kasir 100% rapi dan akurat." }
+                ]
+            },
+            {
+                q: "Ketika ada rekan kerja baru yang belum lancar bekerja, saya biasanya...",
+                options: [
+                    { type: "D", text: "Menyuruh dia memperhatikan dan langsung mencoba praktik agar cepat bisa mandiri." },
+                    { type: "I", text: "Mengajaknya ngobrol santai duluan biar dia tidak merasa tegang atau canggung." },
+                    { type: "S", text: "Dengan sabar menemani dan membantunya pelan-pelan sampai dia paham." },
+                    { type: "C", text: "Mengingatkannya untuk membaca dan mematuhi urutan SOP yang sudah tertulis." }
+                ]
+            },
+            {
+                q: "Jika ada pelanggan yang komplain makanannya terlalu lama, saya akan...",
+                options: [
+                    { type: "D", text: "Langsung menyelesaikan masalahnya saat itu juga tanpa bertele-tele." },
+                    { type: "I", text: "Meminta maaf dengan gaya bicara yang luwes dan ramah agar hatinya adem." },
+                    { type: "S", text: "Mendengarkan keluhannya dengan sabar sampai dia selesai bicara tanpa memotong." },
+                    { type: "C", text: "Menjelaskan urutan antrean dan mengecek letak keterlambatannya secara runtut." }
+                ]
+            },
+            {
+                q: "Teman-teman di tempat kerja biasanya mengenal saya sebagai orang yang...",
+                options: [
+                    { type: "D", text: "Tegas, pemberani, dan pantang menyerah." },
+                    { type: "I", text: "Heboh, ceria, dan pandai mencairkan suasana." },
+                    { type: "S", text: "Pendengar yang baik, setia kawan, dan penyabar." },
+                    { type: "C", text: "Rapi, teliti, dan berpikir logis." }
+                ]
+            },
+            {
+                q: "Saat ada tugas bersih-bersih dapur / outlet (closing), saya...",
+                options: [
+                    { type: "D", text: "Mau semuanya selesai secepat mungkin biar bisa langsung pulang." },
+                    { type: "I", text: "Suka bersih-bersih sambil memutar musik atau sambil bercanda dengan teman." },
+                    { type: "S", text: "Siap mengerjakan bagian apa saja yang belum selesai tanpa banyak protes." },
+                    { type: "C", text: "Memeriksa sudut-sudut kecil, memastikan tidak ada sisa minyak atau kotoran tertinggal." }
+                ]
+            },
+            {
+                q: "Ketika pimpinan memberikan instruksi atau tugas baru, reaksi pertama saya...",
+                options: [
+                    { type: "D", text: "\"Siap, langsung gas eksekusi sekarang!\"" },
+                    { type: "I", text: "\"Wah seru nih, yuk kita coba bareng-bareng!\"" },
+                    { type: "S", text: "\"Baik mas/mbak, saya ikuti arahannya.\"" },
+                    { type: "C", text: "\"Bisa tolong dijelaskan rincian dan alur langkah-langkahnya?\"" }
+                ]
+            },
+            {
+                q: "Hal yang paling saya tidak suka di tempat kerja adalah...",
+                options: [
+                    { type: "D", text: "Teman kerja yang lambat dan banyak alasan." },
+                    { type: "I", text: "Suasana kerja yang kaku, sepi, dan terlalu banyak aturan mengekang." },
+                    { type: "S", text: "Keributan, pertengkaran, atau perubahan jadwal mendadak yang bikin kaget." },
+                    { type: "C", text: "Bekerja sembrono, jorok, dan tidak sesuai standar yang sudah disepakati." }
+                ]
+            },
+            {
+                q: "Cara saya berkomunikasi dengan teman se-shift adalah...",
+                options: [
+                    { type: "D", text: "To the point, singkat, padat, dan langsung pada intinya." },
+                    { type: "I", text: "Ramai, ekspresif, banyak menggunakan bahasa tubuh dan candaan." },
+                    { type: "S", text: "Lembut, santai, dan menjaga perasaan orang lain." },
+                    { type: "C", text: "Teratur, jelas faktanya, dan menghindari perkiraan yang tidak pasti." }
+                ]
+            },
+            {
+                q: "Jika terjadi perbedaan pendapat antar rekan kerja, saya memilih untuk...",
+                options: [
+                    { type: "D", text: "Memperjuangkan pendapat saya karena saya yakin cara saya yang paling efektif." },
+                    { type: "I", text: "Mengajak mereka bercanda agar suasana panasnya mereda." },
+                    { type: "S", text: "Mengalah demi menjaga kerukunan dan kekompakan tim." },
+                    { type: "C", text: "Membuka kembali aturan / SOP resmi untuk melihat mana yang paling tepat." }
+                ]
+            },
+            {
+                q: "Dalam mengambil keputusan saat sedang genting, saya biasanya...",
+                options: [
+                    { type: "D", text: "Sangat cepat, berani ambil risiko demi hasil cepat." },
+                    { type: "I", text: "Mengandalkan insting dan perasaan mana yang paling asyik." },
+                    { type: "S", text: "Berdiskusi dulu dengan rekan lain agar semua setuju." },
+                    { type: "C", text: "Menimbang untung-rugi dan fakta-fakta dengan hati-hati." }
+                ]
+            },
+            {
+                q: "Ketika stok salah satu bahan baku menipis tiba-tiba, respon saya...",
+                options: [
+                    { type: "D", text: "Langsung mencari jalan pintas atau solusi darurat tanpa menunggu lama." },
+                    { type: "I", text: "Mengabari rekan lain dengan heboh dan mencari ide kreatif penggantinya." },
+                    { type: "S", text: "Melaporkan dengan tenang ke PIC shift dan menunggu arahan selanjutnya." },
+                    { type: "C", text: "Mengecek catatan stok masuk-keluar untuk tahu mengapa bahan itu bisa habis lebih cepat." }
+                ]
+            },
+            {
+                q: "Saat waktu luang di sela-sela pergantian shift, saya lebih suka...",
+                options: [
+                    { type: "D", text: "Memikirkan apa lagi target atau pekerjaan berikutnya yang bisa diselesaikan." },
+                    { type: "I", text: "Mengobrol seru, bercanda, atau bermain medsos bareng teman." },
+                    { type: "S", text: "Duduk santai beristirahat menikmati ketenangan." },
+                    { type: "C", text: "Merapikan inventaris atau menata kembali barang-barang yang berantakan." }
+                ]
+            },
+            {
+                q: "Jika hasil kerja tim saya dipuji oleh pimpinan, saya merasa...",
+                options: [
+                    { type: "D", text: "Bangga karena kerja keras dan strategi saya membuahkan hasil." },
+                    { type: "I", text: "Sangat senang karena usaha kita diperhatikan dan dirayakan bersama." },
+                    { type: "S", text: "Bersyukur tim bisa bekerja kompak dan saling mendukung." },
+                    { type: "C", text: "Senang karena kualitas kerja kita memang sudah sesuai standar mutu." }
+                ]
+            },
+            {
+                q: "Ketika berada di bawah tekanan kerja yang sangat berat, saya cenderung menjadi...",
+                options: [
+                    { type: "D", text: "Keras kepala, tidak sabaran, dan gampang menuntut orang lain." },
+                    { type: "I", text: "Mudah gelisah, bicara lebih cepat, dan kurang fokus pada detail." },
+                    { type: "S", text: "Menutup diri, pasrah, dan memendam uneg-uneg sendiri." },
+                    { type: "C", text: "Kaku, terlalu memikirkan hal kecil, dan gampang mengkritik kesalahan kecil." }
+                ]
+            },
+            {
+                q: "Saat diajak mencoba menu racikan baru, fokus utama saya adalah...",
+                options: [
+                    { type: "D", text: "Apakah menu ini bisa dijual mahal dan laku keras di pasaran?" },
+                    { type: "I", text: "Tampilannya keren gak buat difoto dan bikin orang penasaran?" },
+                    { type: "S", text: "Apakah rasanya nyaman di lidah dan disukai oleh keluarga/teman?" },
+                    { type: "C", text: "Berapa rincian takaran gram bumbunya dan bagaimana tingkat konsistensinya?" }
+                ]
+            },
+            {
+                q: "Gaya kepemimpinan yang paling saya sukai adalah pemimpin yang...",
+                options: [
+                    { type: "D", text: "Berani, tegas, dan memberi kebebasan saya untuk bergerak mandiri." },
+                    { type: "I", text: "Menginspirasi, ramah, dan sering mengapresiasi stafnya." },
+                    { type: "S", text: "Pengertian, sabar mendengarkan keluhan, dan setia membimbing." },
+                    { type: "C", text: "Adil, konsisten memegang aturan, dan arahannya selalu jelas." }
+                ]
+            },
+            {
+                q: "Sikap saya terhadap perubahan jadwal shift kerja yang mendadak adalah...",
+                options: [
+                    { type: "D", text: "Tidak masalah selama target pekerjaan harian tetap tercapai." },
+                    { type: "I", text: "Santai saja, asalkan kerja dengan teman yang asyik." },
+                    { type: "S", text: "Agak berat hati karena jadwal pribadi terganggu, tapi tetap saya jalani demi tim." },
+                    { type: "C", text: "Ingin tahu alasan logis di balik perubahan jadwal tersebut." }
+                ]
+            },
+            {
+                q: "Kata sifat yang paling mewakili karakter saya saat melayani tamu adalah...",
+                options: [
+                    { type: "D", text: "Cepat & Efisien." },
+                    { type: "I", text: "Hangat & Ramah." },
+                    { type: "S", text: "Sabar & Sopan." },
+                    { type: "C", text: "Tepat & Teliti." }
+                ]
+            },
+            {
+                q: "Jika saya melihat teman kerja melakukan kesalahan kecil, saya akan...",
+                options: [
+                    { type: "D", text: "Langsung menegurnya di tempat agar dia segera memperbaikinya." },
+                    { type: "I", text: "Mengingatkannya sambil bercanda agar dia tidak merasa tersinggung." },
+                    { type: "S", text: "Membantu memperbaikinya diam-diam tanpa mempermalukannya." },
+                    { type: "C", text: "Menunjukkan letak kesalahannya berdasarkan standar panduan kerja." }
+                ]
+            },
+            {
+                q: "Ketika outlet sedang sepi pengunjung, yang biasa saya lakukan adalah...",
+                options: [
+                    { type: "D", text: "Mencari inisiatif apa yang bisa saya kerjakan untuk kemajuan outlet." },
+                    { type: "I", text: "Mengajak teman ngobrol atau membuat video seru untuk medsos." },
+                    { type: "S", text: "Membersihkan dan menata kembali area stasiun kerja saya secara santai." },
+                    { type: "C", text: "Menghitung kembali persediaan fisik dan mencocokkannya dengan kasir/buku stok." }
+                ]
+            },
+            {
+                q: "Jika saya diminta menjadi juru bicara mewakili tim, saya akan...",
+                options: [
+                    { type: "D", text: "Siap maju paling depan tanpa ragu-ragu." },
+                    { type: "I", text: "Senang sekali karena saya suka berbicara di depan banyak orang." },
+                    { type: "S", text: "Agak malu, lebih suka orang lain saja yang maju." },
+                    { type: "C", text: "Meminta waktu untuk menyiapkan catatan poin-poin penting yang akan disampaikan." }
+                ]
+            },
+            {
+                q: "Dalam menghadapi masalah pribadi di luar pekerjaan, saya biasanya...",
+                options: [
+                    { type: "D", text: "Mengabaikannya dulu dan fokus menyelesaikan urusan kerjaan sampai tuntas." },
+                    { type: "I", text: "Menceritakannya ke teman dekat yang bisa diajak curhat." },
+                    { type: "S", text: "Memendamnya sendiri dan berusaha tetap terlihat biasa saja." },
+                    { type: "C", text: "Memikirkan jalan keluar logis langkah demi langkah sebelum bertindak." }
+                ]
+            },
+            {
+                q: "Bagi saya, uang atau penghasilan adalah...",
+                options: [
+                    { type: "D", text: "Hadiah atas kemenangan dan pencapaian target kerja keras saya." },
+                    { type: "I", text: "Sarana untuk bersenang-senang dan mentraktir teman/keluarga." },
+                    { type: "S", text: "Jaminan keamanan dan ketenangan hidup masa depan." },
+                    { type: "C", text: "Hasil perhitungan nilai yang harus dikelola dan ditabung dengan sangat disiplin." }
+                ]
+            },
+            {
+                q: "Cara saya memotivasi rekan kerja yang sedang lemas/bad mood adalah...",
+                options: [
+                    { type: "D", text: "Mengingatkannya akan tanggung jawab: \"Ayo selesaikan, kita pasti bisa!\"" },
+                    { type: "I", text: "Mengajaknya tertawa, membeli cemilan, atau membuat lelucon." },
+                    { type: "S", text: "Duduk di sampingnya dan menawarkan telinga untuk mendengarkan curhatnya." },
+                    { type: "C", text: "Membantunya mengurai beban kerjanya agar tugasnya terasa lebih teratur." }
+                ]
+            },
+            {
+                q: "Ketika ada evaluasi bulanan dari manajemen, yang paling saya harapkan adalah...",
+                options: [
+                    { type: "D", text: "Penilaian yang jelas atas pencapaian hasil kerja nyata saya." },
+                    { type: "I", text: "Pengakuan dan apresiasi hangat di depan seluruh tim." },
+                    { type: "S", text: "Rasa aman bahwa posisi saya di tim tetap dibutuhkan." },
+                    { type: "C", text: "Umpan balik yang spesifik, berbasis data, dan terukur." }
+                ]
+            },
+            {
+                q: "Saat menyiapkan pesanan katering puluhan kotak nasi, fokus saya adalah...",
+                options: [
+                    { type: "D", text: "Memastikan semua kotak tertutup dan siap sebelum batas waktu pengiriman." },
+                    { type: "I", text: "Menjaga semangat teman-teman agar proses pengerjaan terasa seru dan tidak capek." },
+                    { type: "S", text: "Menjaga ritme kerja agar stabil dari kotak pertama hingga kotak terakhir." },
+                    { type: "C", text: "Memastikan porsi lauk dan sambal di setiap kotak memiliki berat yang sama persis." }
+                ]
+            },
+            {
+                q: "Jika ada alat dapur / kasir yang rusak mendadak, tindakan pertama saya adalah...",
+                options: [
+                    { type: "D", text: "Segera mencari alat cadangan atau cara lain agar operasional tidak berhenti." },
+                    { type: "I", text: "Menghubungi orang yang ahli memperbaikinya sambil mengabari semua orang." },
+                    { type: "S", text: "Tetap tenang dan tidak gegabah mencoba-coba yang bisa memperparah kerusakan." },
+                    { type: "C", text: "Menganalisis penyebab rusaknya dan membaca petunjuk perbaikan." }
+                ]
+            },
+            {
+                q: "Dalam hal kerapian pakaian dan seragam kerja, saya...",
+                options: [
+                    { type: "D", text: "Yang penting nyaman dan tidak mengganggu kecepatan gerak saya." },
+                    { type: "I", text: "Suka tampil menarik, rapi, dan terlihat keren di mata pelanggan." },
+                    { type: "S", text: "Mengikuti seragam yang disepakati bersama oleh tim." },
+                    { type: "C", text: "Selalu memastikan apron, topi, dan sepatu bersih sesuai standar higienitas." }
+                ]
+            },
+            {
+                q: "Saat bekerja sama dalam kelompok, kelebihan terbesar saya adalah...",
+                options: [
+                    { type: "D", text: "Mendorong tim untuk bergerak cepat mencapai target." },
+                    { type: "I", text: "Membangun semangat, antusiasme, dan keakraban antar anggota." },
+                    { type: "S", text: "Menjadi penengah yang setia mendukung siapa pun tanpa pilih kasih." },
+                    { type: "C", text: "Menjaga agar kualitas pekerjaan tidak melenceng dari standar." }
+                ]
+            },
+            {
+                q: "Jika ada teman kerja yang mengajak bersaing secara positif, reaksi saya...",
+                options: [
+                    { type: "D", text: "\"Tantangan diterima! Siapa takut, kita lihat siapa yang terbaik.\"" },
+                    { type: "I", text: "\"Wah seru nih, ayo bikin kompetisi yang asyik!\"" },
+                    { type: "S", text: "\"Saya kerja seperti biasa saja, yang penting outlet tetap lancar.\"" },
+                    { type: "C", text: "\"Harus ada aturan dan kriteria penilaian yang adil dan jelas dulu.\"" }
+                ]
+            },
+            {
+                q: "Pendekatan saya terhadap aturan operasional restoran adalah...",
+                options: [
+                    { type: "D", text: "Aturan itu penting, tapi kalau memperlambat hasil, kadang perlu disesuaikan." },
+                    { type: "I", text: "Aturan baik, tapi jangan sampai bikin suasana kerja jadi kaku dan membosankan." },
+                    { type: "S", text: "Saya selalu taat pada aturan demi kenyamanan bersama." },
+                    { type: "C", text: "Aturan dibuat untuk dipatuhi 100%, tidak boleh ada yang melanggar." }
+                ]
+            },
+            {
+                q: "Saat harus lembur karena pesanan sangat ramai, perasaan saya...",
+                options: [
+                    { type: "D", text: "Tertantang, ini kesempatan membuktikan stamina dan kapasitas kerja saya." },
+                    { type: "I", text: "Tetap ceria, lembur bareng teman-teman rasanya seperti nongkrong bareng." },
+                    { type: "S", text: "Lelah tentu ada, tapi saya ikhlas membantu tim sampai tuntas." },
+                    { type: "C", text: "Menghitung kembali jam kerja ekstra dan memastikan pembagian tugasnya adil." }
+                ]
+            },
+            {
+                q: "Ketika pelanggan meminta pesanan khusus di luar menu biasa, saya...",
+                options: [
+                    { type: "D", text: "Langsung putuskan: bisa atau tidak bisa tanpa ragu." },
+                    { type: "I", text: "Berusaha mengiyakan dengan ramah agar pelanggan merasa spesial dan senang." },
+                    { type: "S", text: "Menanyakan dulu ke dapur apakah teman-teman sanggup membuatnya." },
+                    { type: "C", text: "Mengecek apakah permintaan itu melanggar standar resep dan biaya porsi." }
+                ]
+            },
+            {
+                q: "Hal yang paling membuat saya cepat merasa lelah mental adalah...",
+                options: [
+                    { type: "D", text: "Tidak diberi wewenang dan harus menunggu keputusan orang lain yang lambat." },
+                    { type: "I", text: "Diabaikan, tidak diajak ngobrol, atau dikritik di depan umum." },
+                    { type: "S", text: "Menghadapi orang yang suka marah-marah, kasar, dan penuh drama." },
+                    { type: "C", text: "Bekerja di lingkungan yang semrawut, tidak teratur, dan serba mendadak." }
+                ]
+            },
+            {
+                q: "Bagaimana cara saya menyusun barang-barang di rak penyimpanan?",
+                options: [
+                    { type: "D", text: "Taruh cepat di tempat yang paling gampang dijangkau saat buru-buru." },
+                    { type: "I", text: "Taruh sambil mengelompokkan secara visual yang enak dipandang." },
+                    { type: "S", text: "Taruh di tempat yang biasa orang lain letakkan agar mereka tidak bingung mencarinya." },
+                    { type: "C", text: "Beri label tanggal, atur urutan FIFO (masuk pertama, keluar pertama) dengan presisi." }
+                ]
+            },
+            {
+                q: "Bila seorang teman curhat mengenai masalah kerjanya, saya akan...",
+                options: [
+                    { type: "D", text: "Langsung memberikan solusi praktis agar masalahnya segera selesai." },
+                    { type: "I", text: "Mengajaknya mencari hiburan agar dia melupakan kesedihannya." },
+                    { type: "S", text: "Mendengarkan dengan penuh empati dan menepuk pundaknya." },
+                    { type: "C", text: "Mengajaknya melihat akar penyebab masalah secara objektif." }
+                ]
+            },
+            {
+                q: "Saya paling termotivasi oleh lingkungan kerja yang...",
+                options: [
+                    { type: "D", text: "Cepat, penuh tantangan, dan menghargai prestasi tinggi." },
+                    { type: "I", text: "Penuh kebersamaan, hangat, dan interaktif." },
+                    { type: "S", text: "Stabil, aman, harmonis, dan minim drama." },
+                    { type: "C", text: "Teratur, jelas jenjang aturannya, dan profesional." }
+                ]
+            },
+            {
+                q: "Sikap saya jika rekan kerja datang terlambat saat pergantian shift adalah...",
+                options: [
+                    { type: "D", text: "Menegurnya langsung karena keterlambatannya menyita waktu saya." },
+                    { type: "I", text: "Menggodanya dengan candaan agar dia sadar tanpa merasa diserang." },
+                    { type: "S", text: "Memaklumi dan menanyakan apakah dia mengalami musibah di jalan." },
+                    { type: "C", text: "Mencatat keterlambatannya sesuai dengan lembar presensi resmi." }
+                ]
+            },
+            {
+                q: "Dalam hal membagi tugas harian kepada tim junior, saya biasanya...",
+                options: [
+                    { type: "D", text: "Menunjuk langsung tugas apa yang harus diselesaikan oleh siapa." },
+                    { type: "I", text: "Mengajak mereka bersepakat sambil memberikan kata-kata penyemangat." },
+                    { type: "S", text: "Menawarkan pilihan tugas mana yang mereka rasa paling sanggup kerjakan." },
+                    { type: "C", text: "Membagi tugas secara merata berdasarkan daftar checklist harian." }
+                ]
+            },
+            {
+                q: "Reaksi saya jika disuruh memotong cabai dan bawang dalam jumlah sangat banyak:",
+                options: [
+                    { type: "D", text: "Saya pacu kecepatan tangan saya biar cepat beres dalam waktu singkat." },
+                    { type: "I", text: "Sambil bersenandung atau ngobrol seru biar mata pedasnya tidak terasa." },
+                    { type: "S", text: "Duduk dengan sabar dan memotongnya perlahan sampai selesai semua." },
+                    { type: "C", text: "Memastikan ukuran potongan bawang dan cabai seragam dan higienis." }
+                ]
+            },
+            {
+                q: "Ketika sedang libur kerja, hal yang paling saya sukai adalah...",
+                options: [
+                    { type: "D", text: "Berolahraga atau melakukan aktivitas produktif yang menantang." },
+                    { type: "I", text: "Kumpul nongkrong bareng teman-teman atau jalan-jalan ke tempat ramai." },
+                    { type: "S", text: "Santai di rumah, tidur cukup, atau kumpul bersama keluarga inti." },
+                    { type: "C", text: "Menekuni hobi pribadi yang tenang, menata kamar, atau membaca." }
+                ]
+            },
+            {
+                q: "Dalam situasi rapat evaluasi bersama pimpinan, saya biasanya...",
+                options: [
+                    { type: "D", text: "Paling banyak mengemukakan ide baru dan solusi konkret." },
+                    { type: "I", text: "Berbicara dengan antusias dan mendukung ide-ide seru dari teman lain." },
+                    { type: "S", text: "Lebih banyak menyimak dan baru berbicara jika diminta pendapat." },
+                    { type: "C", text: "Mengajukan pertanyaan mendalam mengenai detail teknis pelaksanaan." }
+                ]
+            },
+            {
+                q: "Sikap saya saat menghadapi kenaikan harga bahan baku di pasar adalah...",
+                options: [
+                    { type: "D", text: "Segera mencari supplier baru yang lebih murah dan berkualitas tanpa basa-basi." },
+                    { type: "I", text: "Membujuk langganan pasar dengan keakraban agar diberi potongan harga khusus." },
+                    { type: "S", text: "Menerima keadaan dan berhemat sebaik mungkin dalam penggunaan bahan." },
+                    { type: "C", text: "Menghitung kembali selisih persentase biaya porsi dan laba rugi secara detail." }
+                ]
+            },
+            {
+                q: "Menurut saya, kunci sukses sebuah restoran F&B terletak pada...",
+                options: [
+                    { type: "D", text: "Kecepatan pelayanan dan ketegasan manajemen dalam mengejar omzet." },
+                    { type: "I", text: "Keramahan staf dan daya tarik konten media sosial yang viral." },
+                    { type: "S", text: "Loyalitas tim dan kenyamanan pelanggan yang betah kembali lagi." },
+                    { type: "C", text: "Konsistensi rasa bumbu, kebersihan outlet, dan ketaatan pada SOP." }
+                ]
+            },
+            {
+                q: "Ketika saya merasa lelah fisik setelah shift malam yang panjang, saya...",
+                options: [
+                    { type: "D", text: "Merasa puas karena hari ini banyak target pesanan yang kami taklukkan." },
+                    { type: "I", text: "Menutup hari dengan bercanda bareng teman sebelum berpisah pulang." },
+                    { type: "S", text: "Pulang dengan tenang, bersyukur hari ini operasional berjalan lancar." },
+                    { type: "C", text: "Memastikan semua saklar mati, pintu terkunci ganda, dan pembukuan pas." }
+                ]
+            },
+            {
+                q: "Cara saya menghadapi teman kerja yang memiliki karakter keras dan pemarah adalah...",
+                options: [
+                    { type: "D", text: "Saya hadapi dengan tegas, saya tidak akan mundur jika saya benar." },
+                    { type: "I", text: "Saya cairkan amarahnya dengan lelucon santai agar tensinya turun." },
+                    { type: "S", text: "Saya mengalah, memilih diam, dan menunggu emosinya mereda sendiri." },
+                    { type: "C", text: "Saya ajak bicara berdasarkan fakta dan aturan kerja, bukan emosi." }
+                ]
+            },
+            {
+                q: "Jika ada piring pecah di area makan tamu, respon instan saya adalah...",
+                options: [
+                    { type: "D", text: "Mengomando: \"Ambil sapu, amankan tamu, bersihkan sekarang!\"" },
+                    { type: "I", text: "Segera menyapa tamu: \"Maaf ya kak, tidak apa-apa, biar kami tangani.\"" },
+                    { type: "S", text: "Langsung bergerak mengambil pengki dan membersihkannya tanpa disuruh." },
+                    { type: "C", text: "Mengecek mengapa piring bisa jatuh agar kejadian serupa tidak terulang lagi." }
+                ]
+            },
+            {
+                q: "Ketika saya dipercaya memegang kunci outlet atau brankas kasir, saya merasa...",
+                options: [
+                    { type: "D", text: "Bangga karena pimpinan mengakui kemampuan dan kapasitas saya." },
+                    { type: "I", text: "Senang karena merasa menjadi bagian penting dari keluarga besar NDOG!." },
+                    { type: "S", text: "Bertanggung jawab menjaga amanah tersebut dengan sepenuh hati." },
+                    { type: "C", text: "Sangat berhati-hati, selalu memeriksa hitungan uang dan gembok berulang kali." }
+                ]
+            },
+            {
+                q: "Kalimat motivasi yang paling pas untuk diri saya sendiri adalah...",
+                options: [
+                    { type: "D", text: "\"Hasil tidak akan mengkhianati kerja keras; jadilah pemenang!\"" },
+                    { type: "I", text: "\"Nikmati setiap prosesnya, tebarkan senyum dan kebahagiaan!\"" },
+                    { type: "S", text: "\"Ketenangan dan kesabaran adalah kunci melewati setiap badai.\"" },
+                    { type: "C", text: "\"Kesempurnaan ada pada detail; lakukan dengan benar sejak awal.\"" }
+                ]
+            }
+        ];
+
+        let staffProfile = {};
+        const userAnswers = {};
+
+        function startQuiz(e) {
+            e.preventDefault();
+            staffProfile = {
+                name: document.getElementById('staff-name').value.trim(),
+                email: document.getElementById('staff-email').value.trim(),
+                role: document.getElementById('staff-role').value,
+                tenure: document.getElementById('staff-tenure').value
+            };
+
+            document.getElementById('intro-card').classList.add('hidden');
+            document.getElementById('quiz-card').classList.remove('hidden');
+
+            renderQuestions();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            questionsData.forEach((item, index) => {
+                const qNum = index + 1;
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-3xl p-6 md:p-8 border border-black/5 shadow-sm transition-all hover:border-black/10";
+                card.id = `q-card-${index}`;
+
+                let optionsHtml = '';
+                item.options.forEach((opt, optIndex) => {
+                    const optId = `q_${index}_${opt.type}`;
+                    optionsHtml += `
+                        <label class="flex items-start gap-3.5 p-4 rounded-2xl border border-black/5 hover:bg-orange-50/50 hover:border-brand-orange/30 cursor-pointer transition-all option-label group">
+                            <input type="radio" name="q_${index}" value="${opt.type}" required onchange="handleAnswerChange(${index}, '${opt.type}')" class="mt-1 w-4 h-4 text-brand-orange focus:ring-brand-orange">
+                            <div class="text-xs md:text-sm text-gray-700 leading-relaxed group-hover:text-brand-dark">
+                                ${opt.text}
+                            </div>
+                        </label>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="w-7 h-7 rounded-full bg-brand-orange/10 text-brand-orange font-black text-xs flex items-center justify-center font-outfit flex-shrink-0">
+                            ${qNum}
+                        </span>
+                        <h3 class="text-sm md:text-base font-bold text-brand-dark font-outfit leading-snug">
+                            ${item.q}
+                        </h3>
+                    </div>
+                    <div class="space-y-2.5">
+                        ${optionsHtml}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function handleAnswerChange(qIndex, type) {
+            userAnswers[qIndex] = type;
+            const answeredCount = Object.keys(userAnswers).length;
+            const total = questionsData.length;
+            const percent = Math.round((answeredCount / total) * 100);
+
+            document.getElementById('progress-text').innerText = `Soal Terjawab: ${answeredCount} / ${total}`;
+            document.getElementById('progress-percent').innerText = `${percent}% Selesai`;
+            document.getElementById('progress-bar').style.width = `${percent}%`;
+
+            const card = document.getElementById(`q-card-${qIndex}`);
+            if (card) {
+                card.classList.add('border-green-200', 'bg-green-50/10');
+            }
+        }
+
+        function calculateResults(e) {
+            e.preventDefault();
+
+            if (Object.keys(userAnswers).length < questionsData.length) {
+                alert(`Masih ada soal yang belum kamu jawab. Harap lengkapi semua ${questionsData.length} pertanyaan ya!`);
+                return;
+            }
+
+            let counts = { D: 0, I: 0, S: 0, C: 0 };
+            for (let i = 0; i < questionsData.length; i++) {
+                counts[userAnswers[i]]++;
+            }
+
+            // Find Dominant Type
+            let dominantType = "D";
+            let maxCount = -1;
+            ["D", "I", "S", "C"].forEach(t => {
+                if (counts[t] > maxCount) {
+                    maxCount = counts[t];
+                    dominantType = t;
+                }
+            });
+
+            showResultScreen(counts, dominantType);
+        }
+
+        const personalityProfiles = {
+            D: {
+                name: "Dominance (D)",
+                title: "Sang Komandan Shift ⚡",
+                tagline: "Tegas, Berani Mengambil Keputusan, Cepat Mengeksekusi, & Tahan Banting di Jam Sibuk.",
+                badgeColor: "bg-red-50 text-red-600 border-red-200",
+                barColor: "bg-red-500",
+                strengths: [
+                    "Sangat tanggap mengambil inisiatif saat antrean membludak.",
+                    "Berorientasi pada hasil dan kecepatan eksekusi pesanan.",
+                    "Berani mengambil tanggung jawab dan mengarahkan tim.",
+                    "Tahan terhadap tekanan kerja tinggi."
+                ],
+                roleFit: "Leader Shift, PIC Outlet, Barista/Cook Utama, Penanggung Jawab Jam Sibuk.",
+                coachingTip: "Belajar lebih sabar mendengarkan rekan lain, dan gunakan nada bicara yang lebih santai saat memberikan instruksi agar rekan kerja tidak merasa tertekan."
+            },
+            I: {
+                name: "Influence (I)",
+                title: "Sang Duta Pelayanan & Keceriaan ✨",
+                tagline: "Ramah, Komunikatif, Menghidupkan Suasana Kerja, & Bikin Tamu Betah.",
+                badgeColor: "bg-amber-50 text-amber-600 border-amber-200",
+                barColor: "bg-amber-500",
+                strengths: [
+                    "Sangat mudah akrab dengan pelanggan, membuat suasana makan jadi menyenangkan.",
+                    "Pandai menyemangati teman kerja saat mulai lelah/lemas.",
+                    "Sangat komunikatif dalam mempromosikan menu tambahan (upselling).",
+                    "Cocok menjadi wajah ramah NDOG! di media sosial dan live TikTok."
+                ],
+                roleFit: "Frontliner, Kasir Ramah, Host Tamu, Content Creator / Live TikTok Host NDOG!.",
+                coachingTip: "Tingkatkan ketelitian pada hal-hal kecil seperti uang kembalian, stok checklist, dan jangan mudah terdistraksi saat kondisi sedang sibuk."
+            },
+            S: {
+                name: "Steadiness (S)",
+                title: "Sang Penjaga Dapur & Keharmonisan 🛡️",
+                tagline: "Sabar, Setia Kawan, Ritme Kerja Stabil, & Menjaga Suasana Tetap Damai.",
+                badgeColor: "bg-green-50 text-green-600 border-green-200",
+                barColor: "bg-green-500",
+                strengths: [
+                    "Ritme kerja konsisten dari jam pertama hingga jam terakhir shift.",
+                    "Sangat setia pada tim, tidak suka memicu konflik atau drama.",
+                    "Dapat diandalkan dalam tugas-tugas rutin yang butuh ketelatenan tinggi.",
+                    "Pendengar yang baik dan menjadi penengah yang menenangkan di dapur."
+                ],
+                roleFit: "Kitchen Crew (Penggorengan & Prep Bahan), Dishwasher, Tim Packing Katering, Operator Dapur.",
+                coachingTip: "Jangan ragu untuk mengutarakan pendapat jika ada hal yang kurang nyaman. Latih keberanian untuk berbicara terbuka dan beradaptasi lebih cepat saat ada perubahan mendadak."
+            },
+            C: {
+                name: "Compliance (C)",
+                title: "Sang Penjaga SOP & Kualitas Rasa 📋",
+                tagline: "Teliti, Rapi, Taat Takaran Resep, & Standar Kebersihan Nomor Satu.",
+                badgeColor: "bg-blue-50 text-blue-600 border-blue-200",
+                barColor: "bg-blue-500",
+                strengths: [
+                    "Memastikan takaran bumbu dan porsi konsisten sesuai gramasi resep resmi.",
+                    "Sangat teliti dalam pembukuan kasir, stok opname, dan uang masuk.",
+                    "Menjaga standar higienitas dan kebersihan alat makan secara ketat.",
+                    "Berpikir logis dan tidak bertindak sembrono."
+                ],
+                roleFit: "Admin Stok & Logistik, Quality Control Rasa Dapur, Kasir Closing / Pembukuan Harian.",
+                coachingTip: "Ingatlah bahwa situasi di restoran kadang membutuhkan fleksibilitas cepat. Jangan terlalu kaku atau panik jika ada hal kecil yang sedikit melenceng dari rencana ideal."
+            }
+        };
+
+        function showResultScreen(counts, dominantType) {
+            document.getElementById('quiz-card').classList.add('hidden');
+            const resultCard = document.getElementById('result-card');
+            resultCard.classList.remove('hidden');
+
+            const profile = personalityProfiles[dominantType];
+            const dPct = Math.round((counts.D / 50) * 100);
+            const iPct = Math.round((counts.I / 50) * 100);
+            const sPct = Math.round((counts.S / 50) * 100);
+            const cPct = Math.round((counts.C / 50) * 100);
+
+            // WA Share Link
+            const waMsg = `*Halo Mas Yanuar / Mbak Irma!* 🚀%0ASaya sudah menyelesaikan Kuis Karakter Tim NDOG!:%0A%0A- *Nama:* ${encodeURIComponent(staffProfile.name)}%0A- *Posisi:* ${encodeURIComponent(staffProfile.role)}%0A- *Tipe Kepribadian Utama:* ${encodeURIComponent(profile.title)}%0A- *Rincian Skor:* D:${counts.D} (${dPct}%), I:${counts.I} (${iPct}%), S:${counts.S} (${sPct}%), C:${counts.C} (${cPct}%)%0A%0ASiap gaspol level up di Staff Gathering Taman Dayu! 🔥`;
+            const waUrl = `https://wa.me/6285134252310?text=${waMsg}`;
+
+            resultCard.innerHTML = `
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <span class="inline-block px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider mb-4 border ${profile.badgeColor} font-outfit">
+                        Hasil Analisis Kepribadian Kerja
+                    </span>
+                    <h2 class="text-2xl md:text-4xl font-black font-outfit text-brand-dark mb-2">
+                        Halo, ${staffProfile.name}! 👋
+                    </h2>
+                    <p class="text-xs md:text-sm text-gray-500">
+                        Berdasarkan 50 pilihan responmu, tipe kepribadian kerja dominan kamu adalah:
+                    </p>
+                    
+                    <div class="mt-6 p-6 rounded-3xl bg-gradient-to-b from-orange-50/50 to-white border border-brand-orange/20 shadow-lg">
+                        <span class="text-sm font-bold text-gray-400 uppercase tracking-widest font-outfit block mb-1">Tipe Dominan: ${profile.name}</span>
+                        <h3 class="text-2xl md:text-4xl font-black font-outfit text-brand-orange mb-3">
+                            ${profile.title}
+                        </h3>
+                        <p class="text-xs md:text-sm text-gray-600 font-medium leading-relaxed">
+                            "${profile.tagline}"
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 4 Bar Breakdown -->
+                <div class="bg-[#F8F9FA] rounded-2xl p-6 border border-black/5 mb-8">
+                    <h4 class="text-xs font-black uppercase tracking-wider text-gray-700 font-outfit mb-4">
+                        Komposisi 4 Karakter Kamu:
+                    </h4>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-xs font-bold font-outfit mb-1">
+                                <span class="text-red-600">D - Dominance (Ketegasan & Kecepatan)</span>
+                                <span>${counts.D} / 50 (${dPct}%)</span>
+                            </div>
+                            <div class="w-full bg-gray-200 h-2.5 rounded-full overflow-hidden">
+                                <div class="bg-red-500 h-full rounded-full" style="width: ${dPct}%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-bold font-outfit mb-1">
+                                <span class="text-amber-600">I - Influence (Keramahan & Komunikasi)</span>
+                                <span>${counts.I} / 50 (${iPct}%)</span>
+                            </div>
+                            <div class="w-full bg-gray-200 h-2.5 rounded-full overflow-hidden">
+                                <div class="bg-amber-500 h-full rounded-full" style="width: ${iPct}%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-bold font-outfit mb-1">
+                                <span class="text-green-600">S - Steadiness (Kesabaran & Ketahanan Dapur)</span>
+                                <span>${counts.S} / 50 (${sPct}%)</span>
+                            </div>
+                            <div class="w-full bg-gray-200 h-2.5 rounded-full overflow-hidden">
+                                <div class="bg-green-500 h-full rounded-full" style="width: ${sPct}%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-bold font-outfit mb-1">
+                                <span class="text-blue-600">C - Compliance (Ketelitian & SOP)</span>
+                                <span>${counts.C} / 50 (${cPct}%)</span>
+                            </div>
+                            <div class="w-full bg-gray-200 h-2.5 rounded-full overflow-hidden">
+                                <div class="bg-blue-500 h-full rounded-full" style="width: ${cPct}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detail Keunggulan & Posisi -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="p-6 rounded-2xl bg-white border border-black/5 shadow-sm">
+                        <h4 class="text-xs font-black uppercase tracking-wider text-brand-orange font-outfit mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-star"></i> Kekuatan Utama Kamu di Tim:
+                        </h4>
+                        <ul class="text-xs text-gray-600 space-y-2">
+                            ${profile.strengths.map(s => `<li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-0.5"></i> <span>${s}</span></li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-white border border-black/5 shadow-sm">
+                        <h4 class="text-xs font-black uppercase tracking-wider text-brand-dark font-outfit mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-bullseye text-brand-orange"></i> Posisi Terbaik di Outlet:
+                        </h4>
+                        <p class="text-xs text-gray-700 leading-relaxed font-semibold mb-4">
+                            ${profile.roleFit}
+                        </p>
+                        
+                        <h4 class="text-xs font-black uppercase tracking-wider text-gray-400 font-outfit mb-1">
+                            Saran Pengembangan Diri (Level Up):
+                        </h4>
+                        <p class="text-xs text-gray-500 leading-relaxed">
+                            ${profile.coachingTip}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- WA Action Button -->
+                <div class="p-6 rounded-2xl bg-orange-50/70 border border-brand-orange/20 text-center flex flex-col items-center">
+                    <h4 class="text-sm font-black font-outfit text-brand-dark mb-1">
+                        Laporkan Hasil Kuis ke Mas Yanuar & Mbak Irma!
+                    </h4>
+                    <p class="text-xs text-gray-500 mb-4 max-w-md">
+                        Klik tombol di bawah untuk mengirimkan rangkuman skormu langsung via WhatsApp ke manajemen NDOG!.
+                    </p>
+                    <a href="${waUrl}" target="_blank" class="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-base"></i>
+                        <span>Kirim Hasil ke WhatsApp Manajemen</span>
+                    </a>
+                </div>
+            `;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
