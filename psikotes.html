@@ -34,6 +34,8 @@
         }
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body class="bg-[#F8F9FA] text-brand-dark font-sans antialiased min-h-screen flex flex-col selection:bg-brand-orange selection:text-white">
 
@@ -739,6 +741,7 @@
             });
 
             showResultScreen(counts, dominantType);
+            sendResultEmail(staffProfile, counts, dominantType);
         }
 
         const personalityProfiles = {
@@ -934,6 +937,41 @@
             `;
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // EmailJS Configuration (Optional / Free 200 emails/month)
+        window.EMAILJS_SERVICE_ID = "";
+        window.EMAILJS_TEMPLATE_ID = "";
+        window.EMAILJS_PUBLIC_KEY = "";
+
+        function sendResultEmail(profile, counts, dominantType) {
+            const p = personalityProfiles[dominantType];
+            const dPct = Math.round((counts.D / 50) * 100);
+            const iPct = Math.round((counts.I / 50) * 100);
+            const sPct = Math.round((counts.S / 50) * 100);
+            const cPct = Math.round((counts.C / 50) * 100);
+
+            if (typeof emailjs !== 'undefined' && window.EMAILJS_PUBLIC_KEY && window.EMAILJS_PUBLIC_KEY !== "") {
+                emailjs.init(window.EMAILJS_PUBLIC_KEY);
+                emailjs.send(window.EMAILJS_SERVICE_ID, window.EMAILJS_TEMPLATE_ID, {
+                    to_name: profile.name,
+                    to_email: profile.email,
+                    role: profile.role,
+                    dominant_title: p.title,
+                    dominant_tagline: p.tagline,
+                    score_d: counts.D + " (" + dPct + "%)",
+                    score_i: counts.I + " (" + iPct + "%)",
+                    score_s: counts.S + " (" + sPct + "%)",
+                    score_c: counts.C + " (" + cPct + "%)",
+                    role_fit: p.roleFit,
+                    coaching_tip: p.coachingTip
+                }).then(function() {
+                    const badge = document.getElementById('email-sent-badge');
+                    if (badge) badge.classList.remove('hidden');
+                }).catch(function(err) {
+                    console.log('EmailJS status:', err);
+                });
+            }
         }
     </script>
 </body>
